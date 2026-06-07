@@ -1,11 +1,15 @@
 const fs = require("fs");
 const http = require("http");
+const https = require("https");
 const path = require("path");
 const { URL } = require("url");
 
 const PORT = Number(process.env.PORT || 4170);
+const HTTPS_PORT = Number(process.env.HTTPS_PORT || 4443);
+const USE_HTTPS = process.env.USE_HTTPS === "true";
 const ROOT_DIR = path.resolve(__dirname, "..");
 const STORE_PATH = path.join(__dirname, "data", "store.json");
+const CERT_DIR = path.join(__dirname, "certs");
 const SELLER_DIST_DIR = path.join(ROOT_DIR, "seller-dashboard", "dist");
 const ADMIN_DIST_DIR = path.join(ROOT_DIR, "super-admin-dashboard", "dist");
 
@@ -1643,8 +1647,10 @@ function serveStaticRoute(response, pathname) {
   return false;
 }
 
-const server = http.createServer((request, response) => {
-  const url = new URL(request.url || "/", `http://${request.headers.host || `localhost:${PORT}`}`);
+const requestHandler = (request, response) => {
+  const protocol = USE_HTTPS ? "https" : "http";
+  const port = USE_HTTPS ? HTTPS_PORT : PORT;
+  const url = new URL(request.url || "/", `${protocol}://${request.headers.host || `localhost:${port}`}`);
 
   if (url.pathname.startsWith("/api/")) {
     handleApiRequest(request, response, url);
@@ -1656,8 +1662,33 @@ const server = http.createServer((request, response) => {
   }
 
   sendText(response, 404, "Not found.");
-});
+};
 
-server.listen(PORT, () => {
-  console.log(`Fresh Republic marketplace server is running at http://localhost:${PORT}`);
-});
+let server;
+
+if (USE_HTTPS) {
+  const certPath = path.join(CERT_DIR, "cert.pem");
+  const keyPath = path.join(CERT_DIR, "key.pem");
+  
+  if (!fs.existsSync(certPath) || !fs.existsSync(keyPath)) {
+    console.error(`❌ HTTPS certificates not found at ${CERT_DIR}`);
+    console.error("Run: npm run generate-certs");
+    process.exit(1);
+  }
+  
+  const options = {
+    cert: fs.readFileSync(certPath),
+    key: fs.readFileSync(keyPath)
+  };
+  
+  server = https.createServer(options, requestHandler);
+  server.listen(HTTPS_PORT, () => {
+    console.log(`🔒 Fresh Republic marketplace server is running at https://localhost:${HTTPS_PORT}`);
+  });
+} else {
+  server = http.createServer(requestHandler);
+  server.listen(PORT, () => {
+    console.log(`Fresh Republic marketplace server is running at http://localhost:${PORT}`);
+    console.log(`To enable HTTPS, set USE_HTTPS=true and run: npm run generate-certs`);
+  });
+}

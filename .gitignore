@@ -3,6 +3,10 @@
 .env.local
 .env.*.local
 
+# HTTPS certificates
+marketplace-api/certs/
+certs/
+
 # Node modules
 node_modules/
 npm-debug.log
