@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fresh Republic Everyday T-Shirts</title>
+  <script>
+    (function () {
+      var incomingParams = new URLSearchParams(window.location.search);
+      var prettyUrl = "dailyessentials/everyday-t-shirts/" + (incomingParams.toString() ? "?" + incomingParams.toString() : "");
+      var targetParams = new URLSearchParams(incomingParams);
+      targetParams.set("category", "everyday-t-shirts");
+      targetParams.set("pretty", prettyUrl);
+      window.location.replace("../../category.html?" + targetParams.toString());
+    }());
+  </script>
+</head>
+<body></body>
+</html>
+
+
+

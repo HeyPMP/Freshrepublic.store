@@ -1,0 +1,3225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="msapplication-TileColor" content="#ffffff" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta property="og:title" content="Admin Dashboard - Fresh Republic" />
+  <meta property="og:site_name" content="Fresh Republic" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="Platform Admin Dashboard for Fresh Republic." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Admin Dashboard - Fresh Republic" />
+  <meta name="twitter:description" content="Admin Dashboard for platform management." />
+  <title>Admin Dashboard - Fresh Republic</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="shared/api-client.js"></script>
+  <style>
+    :root {
+      --primary-black: #000000;
+      --primary-white: #ffffff;
+      --light-gray: #f5f5f5;
+      --medium-gray: #e8e8e8;
+      --dark-gray: #333333;
+      --border-gray: #d0d0d0;
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --accent-color: #000;
+      --success-color: #4caf50;
+      --warning-color: #ff9800;
+      --danger-color: #f44336;
+      --info-color: #2196f3;
+      --sidebar-width: 280px;
+      --header-height: 70px;
+      --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background: var(--light-gray);
+      font-family: Arial, sans-serif;
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      display: flex;
+      overflow-x: hidden;
+    }
+
+    /* ============== SIDEBAR ============== */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: var(--primary-white);
+      border-right: 1px solid var(--medium-gray);
+      overflow-y: auto;
+      overflow-x: hidden;
+      z-index: 1100;
+      transition: transform 0.4s var(--transition-smooth);
+    }
+
+    .sidebar.mobile-hidden {
+      transform: translateX(-100%);
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      border-bottom: 1px solid var(--medium-gray);
+      min-height: var(--header-height);
+      gap: 12px;
+    }
+
+    .sidebar-brand-logo {
+      width: 40px;
+      height: 40px;
+      background: var(--accent-color);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-white);
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .sidebar-brand-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-align: center;
+    }
+
+    .sidebar-nav {
+      padding: 16px 0;
+      list-style: none;
+    }
+
+    .sidebar-nav-section-title {
+      padding: 12px 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      letter-spacing: 0.5px;
+      margin-top: 8px;
+    }
+
+    .sidebar-nav-item {
+      margin: 0;
+    }
+
+    .sidebar-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.3s var(--transition-smooth);
+      border-left: 3px solid transparent;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .sidebar-nav-link:hover,
+    .sidebar-nav-link.active {
+      color: var(--primary-black);
+      background: var(--light-gray);
+      border-left-color: var(--primary-black);
+    }
+
+    .sidebar-nav-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    /* ============== HEADER ============== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: var(--sidebar-width);
+      right: 0;
+      height: var(--header-height);
+      background: var(--primary-white);
+      border-bottom: 1px solid var(--medium-gray);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      z-index: 1050;
+      transition: left 0.4s var(--transition-smooth);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .header.mobile-full {
+      left: 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .header-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 8px;
+      margin: -8px;
+      color: var(--text-primary);
+      transition: transform 0.3s ease;
+    }
+
+    .header-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .header-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .header-search {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .header-search input {
+      width: 250px;
+      height: 40px;
+      padding: 10px 15px;
+      border: 1px solid var(--medium-gray);
+      border-radius: 6px;
+      font-size: 13px;
+      background: var(--light-gray);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .header-search input:focus {
+      outline: none;
+      background: var(--primary-white);
+      border-color: var(--primary-black);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .header-icons {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .header-icon-btn {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--text-primary);
+      padding: 8px;
+      position: relative;
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-icon-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--danger-color);
+      color: var(--primary-white);
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: bold;
+    }
+
+    .profile-dropdown {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .profile-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-white);
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .profile-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--primary-white);
+      border: 1px solid var(--medium-gray);
+      border-radius: 6px;
+      min-width: 200px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      margin-top: 8px;
+    }
+
+    .dropdown-menu.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-item {
+      padding: 12px 16px;
+      border: none;
+      background: none;
+      color: var(--text-primary);
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: background 0.2s ease;
+      font-size: 13px;
+    }
+
+    .dropdown-item:hover {
+      background: var(--light-gray);
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: var(--medium-gray);
+      margin: 8px 0;
+    }
+
+    /* ============== MAIN CONTENT ============== */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      margin-top: var(--header-height);
+      flex: 1;
+      padding: 30px;
+      background: var(--light-gray);
+      min-height: calc(100vh - var(--header-height));
+      transition: margin-left 0.4s var(--transition-smooth);
+    }
+
+    .main-content.mobile-full {
+      margin-left: 0;
+    }
+
+    .page-feedback-layer {
+      position: fixed;
+      top: calc(var(--header-height) + 16px);
+      right: 20px;
+      z-index: 2100;
+      width: min(420px, calc(100vw - 32px));
+      display: grid;
+      gap: 14px;
+      pointer-events: none;
+    }
+
+    .page-toast-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .page-toast,
+    .page-action-card {
+      pointer-events: auto;
+      background: var(--primary-white);
+      border: 1px solid var(--medium-gray);
+      border-radius: 14px;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.14);
+      overflow: hidden;
+    }
+
+    .page-toast {
+      border-left: 4px solid var(--info-color);
+      padding: 16px 18px;
+    }
+
+    .page-toast.success {
+      border-left-color: var(--success-color);
+    }
+
+    .page-toast.warning {
+      border-left-color: var(--warning-color);
+    }
+
+    .page-toast.error {
+      border-left-color: var(--danger-color);
+    }
+
+    .page-toast-header,
+    .page-action-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .page-toast-title,
+    .page-action-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .page-toast-message,
+    .page-action-message {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      white-space: pre-line;
+    }
+
+    .page-toast-message {
+      margin-top: 6px;
+    }
+
+    .page-toast-close {
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 50%;
+      background: var(--light-gray);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .page-toast-close:hover {
+      background: var(--medium-gray);
+      color: var(--text-primary);
+    }
+
+    .page-action-card[hidden] {
+      display: none;
+    }
+
+    .page-action-card {
+      border-top: 4px solid var(--warning-color);
+      padding: 18px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: min(420px, calc(100vw - 32px));
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+      transform: translate(-50%, -50%);
+      z-index: 2150;
+    }
+
+    .page-action-card.info {
+      border-top-color: var(--info-color);
+    }
+
+    .page-action-card.success {
+      border-top-color: var(--success-color);
+    }
+
+    .page-action-card.error {
+      border-top-color: var(--danger-color);
+    }
+
+    .page-action-kicker {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .page-action-message {
+      margin-top: 10px;
+    }
+
+    .page-action-fields {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .page-action-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .page-action-field label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .page-action-input {
+      width: 100%;
+      height: 42px;
+      border: 1px solid var(--medium-gray);
+      border-radius: 8px;
+      padding: 0 12px;
+      background: var(--primary-white);
+      color: var(--text-primary);
+      font-size: 13px;
+    }
+
+    .page-action-input:focus {
+      outline: none;
+      border-color: var(--primary-black);
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .page-action-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .page-action-button {
+      min-width: 110px;
+      height: 40px;
+      border: none;
+      border-radius: 8px;
+      padding: 0 16px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .page-action-button.secondary {
+      background: var(--light-gray);
+      color: var(--text-primary);
+      border: 1px solid var(--medium-gray);
+    }
+
+    .page-action-button.secondary:hover {
+      background: var(--medium-gray);
+    }
+
+    .page-action-button.primary {
+      background: var(--primary-black);
+      color: var(--primary-white);
+    }
+
+    .page-action-card.info .page-action-button.primary {
+      background: var(--info-color);
+    }
+
+    .page-action-card.success .page-action-button.primary {
+      background: var(--success-color);
+    }
+
+    .page-action-card.warning .page-action-button.primary {
+      background: var(--warning-color);
+      color: var(--text-primary);
+    }
+
+    .page-action-card.error .page-action-button.primary {
+      background: var(--danger-color);
+    }
+
+    .page-action-button.primary:hover {
+      filter: brightness(0.95);
+    }
+
+    .page-action-button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    /* ============== SECTIONS ============== */
+    .dashboard-section {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .dashboard-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-header {
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .section-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary-black);
+      color: var(--primary-white);
+    }
+
+    .btn-primary:hover {
+      background: var(--dark-gray);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--light-gray);
+      color: var(--text-primary);
+      border: 1px solid var(--medium-gray);
+    }
+
+    .btn-secondary:hover {
+      background: var(--medium-gray);
+    }
+
+    .btn-danger {
+      background: var(--danger-color);
+      color: var(--primary-white);
+    }
+
+    .btn-danger:hover {
+      background: #da190b;
+    }
+
+    .btn-success {
+      background: var(--success-color);
+      color: var(--primary-white);
+    }
+
+    .btn-success:hover {
+      background: #388e3c;
+    }
+
+    /* ============== METRICS GRID ============== */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .metric-card {
+      background: var(--primary-white);
+      border-radius: 8px;
+      padding: 20px;
+      border: 1px solid var(--medium-gray);
+      transition: all 0.3s var(--transition-smooth);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .metric-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transform: translateY(-4px);
+      border-color: var(--primary-black);
+    }
+
+    .metric-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .metric-icon.success {
+      background: rgba(76, 175, 80, 0.1);
+      color: var(--success-color);
+    }
+
+    .metric-icon.warning {
+      background: rgba(255, 152, 0, 0.1);
+      color: var(--warning-color);
+    }
+
+    .metric-icon.danger {
+      background: rgba(244, 67, 54, 0.1);
+      color: var(--danger-color);
+    }
+
+    .metric-icon.info {
+      background: rgba(33, 150, 243, 0.1);
+      color: var(--info-color);
+    }
+
+    .metric-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .metric-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .metric-change {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .metric-change.positive {
+      color: var(--success-color);
+    }
+
+    .metric-change.negative {
+      color: var(--danger-color);
+    }
+
+    /* ============== CARDS ============== */
+    .card {
+      background: var(--primary-white);
+      border-radius: 8px;
+      border: 1px solid var(--medium-gray);
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--medium-gray);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .card-controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    /* ============== TABLES ============== */
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    thead {
+      background: var(--light-gray);
+      border-bottom: 2px solid var(--medium-gray);
+    }
+
+    th {
+      padding: 14px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      padding: 14px;
+      border-bottom: 1px solid var(--medium-gray);
+      color: var(--text-primary);
+    }
+
+    tbody tr:hover {
+      background: var(--light-gray);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .status-active {
+      background: rgba(76, 175, 80, 0.2);
+      color: var(--success-color);
+    }
+
+    .status-pending {
+      background: rgba(255, 152, 0, 0.2);
+      color: var(--warning-color);
+    }
+
+    .status-rejected {
+      background: rgba(244, 67, 54, 0.2);
+      color: var(--danger-color);
+    }
+
+    .status-suspended {
+      background: rgba(158, 158, 158, 0.2);
+      color: #666;
+    }
+
+    .status-processing {
+      background: rgba(33, 150, 243, 0.2);
+      color: var(--info-color);
+    }
+
+    .status-shipped {
+      background: rgba(156, 39, 176, 0.2);
+      color: #9c27b0;
+    }
+
+    .status-delivered {
+      background: rgba(76, 175, 80, 0.2);
+      color: var(--success-color);
+    }
+
+    .status-cancelled {
+      background: rgba(244, 67, 54, 0.2);
+      color: var(--danger-color);
+    }
+
+    /* ============== FORMS ============== */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: var(--text-primary);
+      font-size: 13px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--medium-gray);
+      border-radius: 6px;
+      font-size: 13px;
+      color: var(--text-primary);
+      background: var(--primary-white);
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-black);
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+    }
+
+    /* ============== MODALS ============== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--primary-white);
+      border-radius: 8px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--medium-gray);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+    }
+
+    .modal-close:hover {
+      color: var(--text-primary);
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--medium-gray);
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    /* ============== CHARTS ============== */
+    .chart-container {
+      background: var(--primary-white);
+      border-radius: 8px;
+      padding: 20px;
+      border: 1px solid var(--medium-gray);
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+    }
+
+    /* ============== TABS ============== */
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--medium-gray);
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+
+    .tab-button {
+      padding: 12px 16px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 13px;
+      position: relative;
+      transition: color 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .tab-button.active {
+      color: var(--primary-black);
+    }
+
+    .tab-button.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--primary-black);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* ============== ACTION BUTTONS ============== */
+    .action-buttons {
+      display: flex;
+      gap: 6px;
+    }
+
+    .action-btn {
+      background: none;
+      border: 1px solid var(--medium-gray);
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      transition: all 0.3s ease;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .action-btn:hover {
+      background: var(--light-gray);
+      border-color: var(--primary-black);
+    }
+
+    .action-btn.danger {
+      color: var(--danger-color);
+      border-color: var(--danger-color);
+    }
+
+    .action-btn.danger:hover {
+      background: rgba(244, 67, 54, 0.1);
+    }
+
+    .action-btn.success {
+      color: var(--success-color);
+      border-color: var(--success-color);
+    }
+
+    .action-btn.success:hover {
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    /* ============== RESPONSIVE ============== */
+    @media (max-width: 1024px) {
+      .main-content {
+        padding: 20px;
+      }
+
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-search {
+        display: none;
+      }
+
+      .profile-name {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --sidebar-width: 0;
+      }
+
+      .sidebar {
+        width: 280px;
+        transform: translateX(-100%);
+      }
+
+      .sidebar.mobile-visible {
+        transform: translateX(0);
+      }
+
+      .header {
+        left: 0;
+        padding: 0 16px;
+      }
+
+      .header-menu-btn {
+        display: flex;
+      }
+
+      .header-title {
+        font-size: 18px;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 16px;
+      }
+
+      .page-feedback-layer {
+        left: 16px;
+        right: 16px;
+        width: auto;
+      }
+
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .section-actions {
+        width: 100%;
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      table {
+        font-size: 11px;
+      }
+
+      th,
+      td {
+        padding: 10px 6px;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .action-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-title {
+        font-size: 16px;
+      }
+
+      .section-title {
+        font-size: 22px;
+      }
+
+      .metric-value {
+        font-size: 22px;
+      }
+
+      .modal-content {
+        width: 95%;
+        max-height: 95vh;
+      }
+
+      .modal-header,
+      .modal-body,
+      .modal-footer {
+        padding: 16px;
+      }
+    }
+
+    /* ============== UTILITY CLASSES ============== */
+    .text-center {
+      text-align: center;
+    }
+
+    .mt-20 {
+      margin-top: 20px;
+    }
+
+    .mb-20 {
+      margin-bottom: 20px;
+    }
+
+    .text-muted {
+      color: var(--text-secondary);
+    }
+
+    .text-success {
+      color: var(--success-color);
+    }
+
+    .text-danger {
+      color: var(--danger-color);
+    }
+
+    .text-warning {
+      color: var(--warning-color);
+    }
+
+    .text-info {
+      color: var(--info-color);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-secondary);
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .empty-state-text {
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 600;
+      background: var(--light-gray);
+      color: var(--text-primary);
+    }
+
+    .badge.danger {
+      background: rgba(244, 67, 54, 0.2);
+      color: var(--danger-color);
+    }
+
+    .badge.success {
+      background: rgba(76, 175, 80, 0.2);
+      color: var(--success-color);
+    }
+  </style>
+</head>
+<body>
+  <!-- LOGIN MODAL -->
+  <div class="modal active" id="loginModal">
+    <div class="modal-content" style="max-width: 400px;">
+      <div class="modal-header">
+        <h2 class="modal-title">Admin Login</h2>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" id="loginEmail" placeholder="admin@freshrepublic.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+        </div>
+        <div id="loginError" style="color: var(--danger-color); margin-bottom: 16px; display: none;"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="performAdminLogin()" style="width: 100%;">Login</button>
+      </div>
+      <div style="text-align: center; padding: 16px; border-top: 1px solid var(--medium-gray);">
+        <small>Admin: admin@freshrepublic.com / Admin@123</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-logo">FR</div>
+      <div class="sidebar-brand-text">Admin Panel</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-nav-section-title">Main</div>
+      <li class="sidebar-nav-item">
+        <a class="sidebar-nav-link active" data-section="overview" onclick="switchSection('overview')">
+          <span class="sidebar-nav-icon">📊</span>
+          <span>Overview</span>
+        </a>
+      </li>
+
+      <div class="sidebar-nav-section-title">Management</div>
+      <li class="sidebar-nav-item">
+        <a class="sidebar-nav-link" data-section="sellers" onclick="switchSection('sellers')">
+          <span class="sidebar-nav-icon">🏪</span>
+          <span>Sellers</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="sidebar-nav-link" data-section="products" onclick="switchSection('products')">
+          <span class="sidebar-nav-icon">📦</span>
+          <span>Products</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="sidebar-nav-link" data-section="orders" onclick="switchSection('orders')">
+          <span class="sidebar-nav-icon">🛒</span>
+          <span>Orders</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="sidebar-nav-link" data-section="customers" onclick="switchSection('customers')">
+          <span class="sidebar-nav-icon">👥</span>
+          <span>Customers</span>
+        </a>
+      </li>
+
+      <div class="sidebar-nav-section-title">Financial</div>
+      <li class="sidebar-nav-item">
+        <a class="sidebar-nav-link" data-section="payments" onclick="switchSection('payments')">
+          <span class="sidebar-nav-icon">💳</span>
+          <span>Payments</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="sidebar-nav-link" data-section="payouts" onclick="switchSection('payouts')">
+          <span class="sidebar-nav-icon">💰</span>
+          <span>Payouts</span>
+        </a>
+      </li>
+
+      <div class="sidebar-nav-section-title">Platform</div>
+      <li class="sidebar-nav-item">
+        <a class="sidebar-nav-link" data-section="content" onclick="switchSection('content')">
+          <span class="sidebar-nav-icon">🎨</span>
+          <span>Content</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="sidebar-nav-link" data-section="analytics" onclick="switchSection('analytics')">
+          <span class="sidebar-nav-icon">📈</span>
+          <span>Analytics</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="sidebar-nav-link" data-section="support" onclick="switchSection('support')">
+          <span class="sidebar-nav-icon">💬</span>
+          <span>Support</span>
+        </a>
+      </li>
+
+      <div class="sidebar-nav-section-title">Configuration</div>
+      <li class="sidebar-nav-item">
+        <a class="sidebar-nav-link" data-section="settings" onclick="switchSection('settings')">
+          <span class="sidebar-nav-icon">⚙️</span>
+          <span>Settings</span>
+        </a>
+      </li>
+    </nav>
+  </aside>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header-left">
+      <button class="header-menu-btn" id="menuBtn" onclick="toggleSidebar()">☰</button>
+      <h1 class="header-title" id="headerTitle">Overview</h1>
+    </div>
+    <div class="header-right">
+      <div class="header-search">
+        <input type="text" placeholder="Search sellers, products, orders...">
+      </div>
+      <div class="header-icons">
+        <button class="header-icon-btn" onclick="toggleNotifications()">
+          🔔
+          <span class="notification-badge">8</span>
+        </button>
+        <div class="profile-dropdown" onclick="toggleProfileDropdown()">
+          <div class="profile-avatar">AD</div>
+          <span class="profile-name">Admin</span>
+          <span style="font-size: 12px;">▼</span>
+          <div class="dropdown-menu" id="profileMenu">
+            <button class="dropdown-item" onclick="switchSection('settings')">Admin Settings</button>
+            <button class="dropdown-item">Activity Log</button>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item" onclick="logout()">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-feedback-layer" id="pageFeedbackLayer" aria-live="polite">
+    <div class="page-toast-stack" id="pageToastStack"></div>
+    <section class="page-action-card warning" id="pageActionCard" hidden aria-live="assertive">
+      <div class="page-action-head">
+        <div>
+          <p class="page-action-kicker" id="pageActionKicker">Action needed</p>
+          <h3 class="page-action-title" id="pageActionTitle">Confirm this change</h3>
+        </div>
+        <button class="page-toast-close" type="button" aria-label="Close notice" onclick="dismissPageAction()">x</button>
+      </div>
+      <p class="page-action-message" id="pageActionMessage"></p>
+      <div class="page-action-fields" id="pageActionFields"></div>
+      <div class="page-action-actions">
+        <button class="page-action-button secondary" type="button" id="pageActionCancelBtn" onclick="cancelPageAction()">Cancel</button>
+        <button class="page-action-button primary" type="button" id="pageActionConfirmBtn" onclick="confirmPageAction()">Continue</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" id="mainContent">
+
+    <!-- ============== OVERVIEW ============== -->
+    <section class="dashboard-section active" id="overview">
+      <div class="section-header">
+        <h2 class="section-title">Platform Overview</h2>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon success">💵</div>
+          <div class="metric-label">Total Revenue</div>
+          <div class="metric-value">₹8.5M</div>
+          <div class="metric-change positive">↑ 23% from last month</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon info">📦</div>
+          <div class="metric-label">Total Orders</div>
+          <div class="metric-value">4,256</div>
+          <div class="metric-change positive">↑ 340 this week</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon info">👥</div>
+          <div class="metric-label">Total Customers</div>
+          <div class="metric-value">12,450</div>
+          <div class="metric-change positive">↑ 850 new this month</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon warning">🏪</div>
+          <div class="metric-label">Active Sellers</div>
+          <div class="metric-value">382</div>
+          <div class="metric-change">15 pending approval</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon info">📦</div>
+          <div class="metric-label">Total Products</div>
+          <div class="metric-value">8,920</div>
+          <div class="metric-change">240 pending review</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon danger">⏳</div>
+          <div class="metric-label">Pending Payouts</div>
+          <div class="metric-value">₹2.3M</div>
+          <div class="metric-change">Due by Apr 30</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon danger">🔄</div>
+          <div class="metric-label">Return Requests</div>
+          <div class="metric-value">87</div>
+          <div class="metric-change">12 need approval</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon warning">⚠️</div>
+          <div class="metric-label">Seller Approvals</div>
+          <div class="metric-value">15</div>
+          <div class="metric-change">Waiting review</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Sales Analytics</h3>
+          </div>
+          <div class="card-body">
+            <div style="position: relative; height: 280px;">
+              <canvas id="revenueChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Recent Activity</h3>
+          </div>
+          <div class="card-body">
+            <div style="font-size: 13px;">
+              <div style="padding: 10px 0; border-bottom: 1px solid var(--medium-gray); display: flex; justify-content: space-between;">
+                <span><strong>New seller registered</strong> - AkshayStore</span>
+                <span style="color: var(--text-secondary); font-size: 11px;">2 min ago</span>
+              </div>
+              <div style="padding: 10px 0; border-bottom: 1px solid var(--medium-gray); display: flex; justify-content: space-between;">
+                <span><strong>Product approved</strong> - Premium Denim</span>
+                <span style="color: var(--text-secondary); font-size: 11px;">15 min ago</span>
+              </div>
+              <div style="padding: 10px 0; border-bottom: 1px solid var(--medium-gray); display: flex; justify-content: space-between;">
+                <span><strong>Return request</strong> - Order #ORD-4523</span>
+                <span style="color: var(--text-secondary); font-size: 11px;">28 min ago</span>
+              </div>
+              <div style="padding: 10px 0; border-bottom: 1px solid var(--medium-gray); display: flex; justify-content: space-between;">
+                <span><strong>Seller KYC verified</strong> - FashionHub</span>
+                <span style="color: var(--text-secondary); font-size: 11px;">45 min ago</span>
+              </div>
+              <div style="padding: 10px 0; display: flex; justify-content: space-between;">
+                <span><strong>Payment processed</strong> - ₹50,000</span>
+                <span style="color: var(--text-secondary); font-size: 11px;">1 hour ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SELLER MANAGEMENT ============== -->
+    <section class="dashboard-section" id="sellers">
+      <div class="section-header">
+        <h2 class="section-title">Seller Management</h2>
+        <div class="section-actions">
+          <button class="btn btn-secondary">Filter</button>
+          <button class="btn btn-secondary">Export</button>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-button active" onclick="switchTab('all-sellers', event)">All Sellers</button>
+        <button class="tab-button" onclick="switchTab('pending-sellers', event)">Pending Approval</button>
+        <button class="tab-button" onclick="switchTab('verified-sellers', event)">Verified</button>
+        <button class="tab-button" onclick="switchTab('suspended-sellers', event)">Suspended</button>
+      </div>
+
+      <div class="tab-content active" id="all-sellers">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Seller Name</th>
+                    <th>Email</th>
+                    <th>Products</th>
+                    <th>Orders</th>
+                    <th>Rating</th>
+                    <th>KYC</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Aditya's Fashion Store</strong></td>
+                    <td>aditya@store.com</td>
+                    <td>48</td>
+                    <td>156</td>
+                    <td>4.8★</td>
+                    <td><span class="badge success">✓</span></td>
+                    <td><span class="status-badge status-active">Active</span></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button class="action-btn" onclick="viewSeller(1)">View</button>
+                        <button class="action-btn" onclick="editCommission(1)">Commission</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>StyleHub Premium</strong></td>
+                    <td>style@hub.com</td>
+                    <td>92</td>
+                    <td>312</td>
+                    <td>4.6★</td>
+                    <td><span class="badge success">✓</span></td>
+                    <td><span class="status-badge status-active">Active</span></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button class="action-btn" onclick="viewSeller(2)">View</button>
+                        <button class="action-btn" onclick="editCommission(2)">Commission</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Urban Fashion Co</strong></td>
+                    <td>urban@fashion.com</td>
+                    <td>35</td>
+                    <td>89</td>
+                    <td>4.5★</td>
+                    <td><span class="badge">Pending</span></td>
+                    <td><span class="status-badge status-pending">Pending</span></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button class="action-btn success" onclick="approveSeller(3)">Approve</button>
+                        <button class="action-btn danger" onclick="rejectSeller(3)">Reject</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="pending-sellers">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Seller Name</th>
+                    <th>Applied Date</th>
+                    <th>Documents</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Urban Fashion Co</strong></td>
+                    <td>Apr 25, 2024</td>
+                    <td><button class="action-btn" onclick="viewDocuments(3)">Review</button></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button class="action-btn success" onclick="approveSeller(3)">Approve</button>
+                        <button class="action-btn danger" onclick="rejectSeller(3)">Reject</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="verified-sellers">
+        <div class="empty-state">
+          <div class="empty-state-icon">✓</div>
+          <div class="empty-state-text">All verified sellers shown in All Sellers tab</div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="suspended-sellers">
+        <div class="empty-state">
+          <div class="empty-state-icon">🚫</div>
+          <div class="empty-state-text">No suspended sellers at the moment</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== PRODUCT MANAGEMENT ============== -->
+    <section class="dashboard-section" id="products">
+      <div class="section-header">
+        <h2 class="section-title">Product Management</h2>
+        <div class="section-actions">
+          <button class="btn btn-secondary">Filter</button>
+          <button class="btn btn-secondary">Export</button>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-button active" onclick="switchTab('all-products', event)">All Products</button>
+        <button class="tab-button" onclick="switchTab('pending-products', event)">Pending Review</button>
+        <button class="tab-button" onclick="switchTab('approved-products', event)">Approved</button>
+        <button class="tab-button" onclick="switchTab('rejected-products', event)">Rejected</button>
+      </div>
+
+      <div class="tab-content active" id="all-products">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Seller</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Premium Denim Jeans</strong></td>
+                    <td>Aditya's Fashion Store</td>
+                    <td>Jeans</td>
+                    <td>₹1,999</td>
+                    <td>45</td>
+                    <td><span class="status-badge status-active">Approved</span></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button class="action-btn" onclick="viewProduct(1)">View</button>
+                        <button class="action-btn" onclick="markFeatured(1)">Feature</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Cotton T-Shirt</strong></td>
+                    <td>StyleHub Premium</td>
+                    <td>T-Shirts</td>
+                    <td>₹999</td>
+                    <td>120</td>
+                    <td><span class="status-badge status-active">Approved</span></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button class="action-btn" onclick="viewProduct(2)">View</button>
+                        <button class="action-btn" onclick="markFeatured(2)">Feature</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Graphic Print Hoodie</strong></td>
+                    <td>Urban Fashion Co</td>
+                    <td>Hoodies</td>
+                    <td>₹1,499</td>
+                    <td>32</td>
+                    <td><span class="status-badge status-pending">Pending</span></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button class="action-btn success" onclick="approveProduct(3)">Approve</button>
+                        <button class="action-btn danger" onclick="rejectProduct(3)">Reject</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="pending-products">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Seller</th>
+                    <th>Submitted Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Graphic Print Hoodie</strong></td>
+                    <td>Urban Fashion Co</td>
+                    <td>Apr 26, 2024</td>
+                    <td>
+                      <div class="action-buttons">
+                        <button class="action-btn success" onclick="approveProduct(3)">Approve</button>
+                        <button class="action-btn danger" onclick="rejectProduct(3)">Reject</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="approved-products">
+        <div class="empty-state">
+          <div class="empty-state-icon">✓</div>
+          <div class="empty-state-text">Approved products shown in All Products tab</div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="rejected-products">
+        <div class="empty-state">
+          <div class="empty-state-icon">✗</div>
+          <div class="empty-state-text">No rejected products</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== ORDER MANAGEMENT ============== -->
+    <section class="dashboard-section" id="orders">
+      <div class="section-header">
+        <h2 class="section-title">Order Management</h2>
+        <div class="section-actions">
+          <button class="btn btn-secondary">Filter</button>
+          <button class="btn btn-secondary">Export</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Seller</th>
+                  <th>Amount</th>
+                  <th>Items</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#ORD-2024-001</td>
+                  <td>John Smith</td>
+                  <td>Aditya's Fashion Store</td>
+                  <td>₹5,500</td>
+                  <td>2</td>
+                  <td><span class="status-badge status-processing">Processing</span></td>
+                  <td>Apr 27, 2024</td>
+                  <td>
+                    <div class="action-buttons">
+                      <button class="action-btn" onclick="viewOrder(1)">View</button>
+                      <button class="action-btn" onclick="cancelOrder(1)">Cancel</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#ORD-2024-002</td>
+                  <td>Sarah Johnson</td>
+                  <td>StyleHub Premium</td>
+                  <td>₹8,200</td>
+                  <td>1</td>
+                  <td><span class="status-badge status-shipped">Shipped</span></td>
+                  <td>Apr 26, 2024</td>
+                  <td>
+                    <div class="action-buttons">
+                      <button class="action-btn" onclick="viewOrder(2)">View</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#ORD-2024-003</td>
+                  <td>Mike Wilson</td>
+                  <td>Aditya's Fashion Store</td>
+                  <td>₹3,800</td>
+                  <td>3</td>
+                  <td><span class="status-badge status-delivered">Delivered</span></td>
+                  <td>Apr 25, 2024</td>
+                  <td>
+                    <div class="action-buttons">
+                      <button class="action-btn" onclick="viewOrder(3)">View</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== CUSTOMER MANAGEMENT ============== -->
+    <section class="dashboard-section" id="customers">
+      <div class="section-header">
+        <h2 class="section-title">Customer Management</h2>
+        <div class="section-actions">
+          <button class="btn btn-secondary">Filter</button>
+          <button class="btn btn-secondary">Export</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer Name</th>
+                  <th>Email</th>
+                  <th>Orders</th>
+                  <th>Total Spent</th>
+                  <th>Status</th>
+                  <th>Joined</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>John Smith</strong></td>
+                  <td>john@email.com</td>
+                  <td>12</td>
+                  <td>₹45,600</td>
+                  <td><span class="status-badge status-active">Active</span></td>
+                  <td>Jan 15, 2024</td>
+                  <td>
+                    <div class="action-buttons">
+                      <button class="action-btn" onclick="viewCustomer(1)">View</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Sarah Johnson</strong></td>
+                  <td>sarah@email.com</td>
+                  <td>8</td>
+                  <td>₹32,400</td>
+                  <td><span class="status-badge status-active">Active</span></td>
+                  <td>Feb 20, 2024</td>
+                  <td>
+                    <div class="action-buttons">
+                      <button class="action-btn" onclick="viewCustomer(2)">View</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Mike Wilson</strong></td>
+                  <td>mike@email.com</td>
+                  <td>3</td>
+                  <td>₹12,500</td>
+                  <td><span class="status-badge status-active">Active</span></td>
+                  <td>Mar 10, 2024</td>
+                  <td>
+                    <div class="action-buttons">
+                      <button class="action-btn" onclick="viewCustomer(3)">View</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== PAYMENTS ============== -->
+    <section class="dashboard-section" id="payments">
+      <div class="section-header">
+        <h2 class="section-title">Platform Payments</h2>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon success">💵</div>
+          <div class="metric-label">Total Platform Earnings</div>
+          <div class="metric-value">₹8.5M</div>
+          <div class="metric-change positive">↑ 23% from last month</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon info">💳</div>
+          <div class="metric-label">Commission Deducted</div>
+          <div class="metric-value">₹1.2M</div>
+          <div class="metric-change">10-15% rate</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon danger">💔</div>
+          <div class="metric-label">Payment Failures</div>
+          <div class="metric-value">3</div>
+          <div class="metric-change">Needs retry</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon danger">🔄</div>
+          <div class="metric-label">Refunds Issued</div>
+          <div class="metric-value">₹85,000</div>
+          <div class="metric-change">This month</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Recent Payments</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Transaction ID</th>
+                  <th>Order</th>
+                  <th>Customer</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#TXN-001</td>
+                  <td>#ORD-2024-001</td>
+                  <td>John Smith</td>
+                  <td>₹5,500</td>
+                  <td><span class="status-badge status-delivered">Success</span></td>
+                  <td>Apr 27, 2024</td>
+                  <td><button class="action-btn" onclick="viewTransaction(1)">View</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== PAYOUTS ============== -->
+    <section class="dashboard-section" id="payouts">
+      <div class="section-header">
+        <h2 class="section-title">Seller Payouts</h2>
+        <div class="section-actions">
+          <button class="btn btn-primary" onclick="processPayout()">Process Payouts</button>
+          <button class="btn btn-secondary">Filter</button>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-button active" onclick="switchTab('pending-payouts', event)">Pending</button>
+        <button class="tab-button" onclick="switchTab('processed-payouts', event)">Processed</button>
+        <button class="tab-button" onclick="switchTab('failed-payouts', event)">Failed</button>
+      </div>
+
+      <div class="tab-content active" id="pending-payouts">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Seller</th>
+                    <th>Amount</th>
+                    <th>Requested Date</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Aditya's Fashion Store</strong></td>
+                    <td>₹50,000</td>
+                    <td>Apr 20, 2024</td>
+                    <td>Apr 30, 2024</td>
+                    <td><span class="status-badge status-pending">Pending</span></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button class="action-btn success" onclick="approvePayout(1)">Approve</button>
+                        <button class="action-btn danger" onclick="rejectPayout(1)">Reject</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>StyleHub Premium</strong></td>
+                    <td>₹75,000</td>
+                    <td>Apr 22, 2024</td>
+                    <td>Apr 30, 2024</td>
+                    <td><span class="status-badge status-pending">Pending</span></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button class="action-btn success" onclick="approvePayout(2)">Approve</button>
+                        <button class="action-btn danger" onclick="rejectPayout(2)">Reject</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="processed-payouts">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Seller</th>
+                    <th>Amount</th>
+                    <th>Processed Date</th>
+                    <th>Bank</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Urban Fashion Co</strong></td>
+                    <td>₹30,000</td>
+                    <td>Apr 15, 2024</td>
+                    <td>HDFC Bank</td>
+                    <td><span class="status-badge status-delivered">Completed</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="failed-payouts">
+        <div class="empty-state">
+          <div class="empty-state-icon">❌</div>
+          <div class="empty-state-text">No failed payouts</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== CONTENT MANAGEMENT ============== -->
+    <section class="dashboard-section" id="content">
+      <div class="section-header">
+        <h2 class="section-title">Content & Homepage Control</h2>
+        <div class="section-actions">
+          <button class="btn btn-primary" onclick="addBanner()">Add Banner</button>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-button active" onclick="switchTab('banners', event)">Banners</button>
+        <button class="tab-button" onclick="switchTab('categories', event)">Categories</button>
+        <button class="tab-button" onclick="switchTab('collections', event)">Featured Collections</button>
+        <button class="tab-button" onclick="switchTab('announcements', event)">Announcements</button>
+      </div>
+
+      <div class="tab-content active" id="banners">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Banner</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Summer Collection 2024</strong></td>
+                    <td>Homepage Hero</td>
+                    <td><span class="status-badge status-active">Active</span></td>
+                    <td>Apr 1, 2024</td>
+                    <td>
+                      <div class="action-buttons">
+                        <button class="action-btn" onclick="editBanner(1)">Edit</button>
+                        <button class="action-btn danger" onclick="deleteBanner(1)">Delete</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="categories">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th>Products</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Dresses</strong></td>
+                    <td>450</td>
+                    <td><span class="status-badge status-active">Active</span></td>
+                    <td><button class="action-btn" onclick="editCategory(1)">Edit</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="collections">
+        <div class="empty-state">
+          <div class="empty-state-icon">🎨</div>
+          <div class="empty-state-text">No featured collections yet</div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="announcements">
+        <div class="empty-state">
+          <div class="empty-state-icon">📢</div>
+          <div class="empty-state-text">No active announcements</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== ANALYTICS ============== -->
+    <section class="dashboard-section" id="analytics">
+      <div class="section-header">
+        <h2 class="section-title">Analytics & Insights</h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Sales Trends</h3>
+          </div>
+          <div class="card-body">
+            <div class="chart-container">
+              <p>Sales Chart - Chart.js Integration</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Traffic Overview</h3>
+          </div>
+          <div class="card-body">
+            <div class="chart-container">
+              <p>Traffic Chart - Chart.js Integration</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2 mt-20">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Top Categories</h3>
+          </div>
+          <div class="card-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Revenue</th>
+                  <th>% of Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Dresses</td>
+                  <td>₹2.1M</td>
+                  <td>24.7%</td>
+                </tr>
+                <tr>
+                  <td>Jeans</td>
+                  <td>₹1.8M</td>
+                  <td>21.2%</td>
+                </tr>
+                <tr>
+                  <td>T-Shirts</td>
+                  <td>₹1.5M</td>
+                  <td>17.6%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Top Sellers</h3>
+          </div>
+          <div class="card-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Seller</th>
+                  <th>Revenue</th>
+                  <th>% of Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Aditya's Fashion Store</td>
+                  <td>₹1.2M</td>
+                  <td>14.1%</td>
+                </tr>
+                <tr>
+                  <td>StyleHub Premium</td>
+                  <td>₹980K</td>
+                  <td>11.5%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SUPPORT CENTER ============== -->
+    <section class="dashboard-section" id="support">
+      <div class="section-header">
+        <h2 class="section-title">Support Center</h2>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-button active" onclick="switchTab('customer-tickets', event)">Customer Tickets</button>
+        <button class="tab-button" onclick="switchTab('seller-tickets', event)">Seller Tickets</button>
+        <button class="tab-button" onclick="switchTab('refund-issues', event)">Refund Issues</button>
+      </div>
+
+      <div class="tab-content active" id="customer-tickets">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ticket ID</th>
+                    <th>Customer</th>
+                    <th>Subject</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#TK-C-001</td>
+                    <td>John Smith</td>
+                    <td>Order not delivered</td>
+                    <td><span class="status-badge status-processing">In Progress</span></td>
+                    <td>Apr 27, 2024</td>
+                    <td><button class="action-btn" onclick="viewTicket(1)">View</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="seller-tickets">
+        <div class="empty-state">
+          <div class="empty-state-icon">💬</div>
+          <div class="empty-state-text">No seller tickets at the moment</div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="refund-issues">
+        <div class="empty-state">
+          <div class="empty-state-icon">💰</div>
+          <div class="empty-state-text">No refund issues pending</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SETTINGS ============== -->
+    <section class="dashboard-section" id="settings">
+      <div class="section-header">
+        <h2 class="section-title">Platform Settings</h2>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-button active" onclick="switchTab('commission-settings', event)">Commission</button>
+        <button class="tab-button" onclick="switchTab('delivery-settings', event)">Delivery</button>
+        <button class="tab-button" onclick="switchTab('payment-settings', event)">Payments</button>
+        <button class="tab-button" onclick="switchTab('tax-settings', event)">Tax</button>
+      </div>
+
+      <div class="tab-content active" id="commission-settings">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Commission Settings</h3>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>Default Commission Rate (%)</label>
+              <input type="number" class="form-control" value="10" min="0" max="50">
+            </div>
+            <div class="form-group">
+              <label>Premium Seller Rate (%)</label>
+              <input type="number" class="form-control" value="7" min="0" max="50">
+            </div>
+            <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="delivery-settings">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Delivery Configuration</h3>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>Standard Delivery Days</label>
+              <input type="number" class="form-control" value="3" min="1" max="30">
+            </div>
+            <div class="form-group">
+              <label>Express Delivery Days</label>
+              <input type="number" class="form-control" value="1" min="1" max="30">
+            </div>
+            <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="payment-settings">
+        <div class="empty-state">
+          <div class="empty-state-icon">💳</div>
+          <div class="empty-state-text">Payment gateway settings configured</div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tax-settings">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Tax Configuration</h3>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>GST Rate (%)</label>
+              <input type="number" class="form-control" value="18" min="0" max="50">
+            </div>
+            <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let pageActionConfig = null;
+
+    function escapeHtml(value) {
+      const entityMap = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      };
+      return String(value == null ? '' : value).replace(/[&<>"']/g, (character) => entityMap[character]);
+    }
+
+    function getPageActionElements() {
+      return {
+        card: document.getElementById('pageActionCard'),
+        kicker: document.getElementById('pageActionKicker'),
+        title: document.getElementById('pageActionTitle'),
+        message: document.getElementById('pageActionMessage'),
+        fields: document.getElementById('pageActionFields'),
+        cancelBtn: document.getElementById('pageActionCancelBtn'),
+        confirmBtn: document.getElementById('pageActionConfirmBtn')
+      };
+    }
+
+    function removePageToast(toast) {
+      if (toast && toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }
+
+    function showPageToast(message, tone = 'info', title = 'Notice', timeoutMs = 4200) {
+      const stack = document.getElementById('pageToastStack');
+      if (!stack) {
+        return;
+      }
+
+      const toast = document.createElement('article');
+      toast.className = `page-toast ${tone}`;
+      toast.innerHTML = `
+        <div class="page-toast-header">
+          <strong class="page-toast-title">${escapeHtml(title)}</strong>
+          <button class="page-toast-close" type="button" aria-label="Dismiss notice">x</button>
+        </div>
+        <div class="page-toast-message">${escapeHtml(message)}</div>
+      `;
+
+      const closeBtn = toast.querySelector('.page-toast-close');
+      closeBtn.addEventListener('click', () => removePageToast(toast));
+      stack.prepend(toast);
+
+      if (timeoutMs > 0) {
+        window.setTimeout(() => removePageToast(toast), timeoutMs);
+      }
+    }
+
+    function hidePageAction() {
+      const elements = getPageActionElements();
+      pageActionConfig = null;
+      elements.card.hidden = true;
+      elements.card.className = 'page-action-card warning';
+      elements.fields.innerHTML = '';
+      elements.cancelBtn.hidden = false;
+      elements.confirmBtn.disabled = false;
+      elements.confirmBtn.textContent = 'Continue';
+    }
+
+    function dismissPageAction() {
+      hidePageAction();
+    }
+
+    function cancelPageAction() {
+      const config = pageActionConfig;
+      hidePageAction();
+      if (config && typeof config.onCancel === 'function') {
+        config.onCancel();
+      }
+    }
+
+    function openPageAction(options = {}) {
+      const elements = getPageActionElements();
+      const tone = options.tone || 'warning';
+      const defaultKicker = {
+        info: 'On-page notice',
+        success: 'Saved',
+        warning: 'Action needed',
+        error: 'Attention needed'
+      };
+
+      pageActionConfig = options;
+      elements.card.className = `page-action-card ${tone}`;
+      elements.kicker.textContent = options.kicker || defaultKicker[tone] || 'On-page notice';
+      elements.title.textContent = options.title || 'Confirm this change';
+      elements.message.textContent = options.message || '';
+      elements.fields.innerHTML = options.fieldsHtml || '';
+      elements.cancelBtn.hidden = options.showCancel === false;
+      elements.cancelBtn.textContent = options.cancelText || 'Cancel';
+      elements.confirmBtn.textContent = options.confirmText || 'Continue';
+      elements.card.hidden = false;
+
+      if (typeof options.onOpen === 'function') {
+        window.requestAnimationFrame(() => options.onOpen());
+      }
+    }
+
+    async function confirmPageAction() {
+      const config = pageActionConfig;
+      const elements = getPageActionElements();
+      if (!config) {
+        return;
+      }
+
+      const originalText = elements.confirmBtn.textContent;
+      elements.confirmBtn.disabled = true;
+      if (config.pendingText) {
+        elements.confirmBtn.textContent = config.pendingText;
+      }
+
+      try {
+        const payload = typeof config.getPayload === 'function' ? config.getPayload() : undefined;
+        if (payload === false) {
+          elements.confirmBtn.disabled = false;
+          elements.confirmBtn.textContent = originalText;
+          return;
+        }
+
+        if (typeof config.onConfirm === 'function') {
+          await config.onConfirm(payload);
+        }
+
+        hidePageAction();
+      } catch (error) {
+        elements.confirmBtn.disabled = false;
+        elements.confirmBtn.textContent = originalText;
+        showPageToast(error.message || 'Something went wrong.', 'error', 'Action failed', 6000);
+      }
+    }
+
+    function openInfoPanel(title, message, tone = 'info') {
+      openPageAction({
+        tone,
+        title,
+        message,
+        confirmText: 'Close',
+        showCancel: false
+      });
+    }
+
+    // ============== AUTHENTICATION ============== 
+    async function checkAdminAuth() {
+      const auth = api.getAuth();
+      if (!auth.token) {
+        document.getElementById('loginModal').classList.add('active');
+        return false;
+      }
+      document.getElementById('loginModal').classList.remove('active');
+      updateAdminProfile();
+      loadAdminDashboard();
+      applyInitialAdminSection();
+      return true;
+    }
+
+    async function performAdminLogin() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      const errorDiv = document.getElementById('loginError');
+
+      if (!email || !password) {
+        errorDiv.textContent = 'Email and password required';
+        errorDiv.style.display = 'block';
+        return;
+      }
+
+      try {
+        errorDiv.style.display = 'none';
+        await api.adminLogin({ email, password });
+        document.getElementById('loginModal').classList.remove('active');
+        updateAdminProfile();
+        loadAdminDashboard();
+        applyInitialAdminSection();
+      } catch (error) {
+        errorDiv.textContent = error.message || 'Login failed';
+        errorDiv.style.display = 'block';
+      }
+    }
+
+    function updateAdminProfile() {
+      const user = api.getAuth().user;
+      if (user) {
+        document.querySelector('.profile-avatar').textContent = 'AD';
+        document.querySelector('.profile-name').textContent = 'Admin';
+      }
+    }
+
+    async function loadAdminDashboard() {
+      try {
+        const dashboardData = await api.getAdminDashboard();
+        updateAdminMetrics(dashboardData.data);
+      } catch (error) {
+        console.error('Failed to load admin dashboard:', error);
+      }
+    }
+
+    function updateAdminMetrics(data) {
+      if (data.metrics) {
+        const metrics = data.metrics;
+        const metricElements = document.querySelectorAll('.metric-value');
+        metricElements[0].textContent = '₹' + (metrics.totalRevenue / 1000000).toFixed(1) + 'M';
+        metricElements[1].textContent = metrics.totalOrders;
+        metricElements[2].textContent = metrics.totalCustomers;
+        metricElements[3].textContent = metrics.totalSellers;
+        metricElements[4].textContent = metrics.totalProducts;
+        metricElements[5].textContent = '₹' + (metrics.totalRevenue * 0.14 / 1000000).toFixed(1) + 'M';
+        metricElements[6].textContent = '87';
+        metricElements[7].textContent = metrics.pendingSellers;
+      }
+    }
+
+    async function loadSellers() {
+      try {
+        const response = await api.getAllSellers();
+        window.sellers = response.data || [];
+        refreshSellersTable();
+      } catch (error) {
+        console.error('Failed to load sellers:', error);
+      }
+    }
+
+    function refreshSellersTable() {
+      const tbody = document.querySelectorAll('table tbody')[0];
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      window.sellers.slice(0, 3).forEach(seller => {
+        const row = `
+          <tr>
+            <td><strong>${seller.storeName}</strong></td>
+            <td>${seller.email}</td>
+            <td>${seller.products?.length || 0}</td>
+            <td>${seller.totalOrders}</td>
+            <td>${seller.rating || 4.5}★</td>
+            <td><span class="badge ${seller.kycStatus === 'Verified' ? 'success' : ''}">${seller.kycStatus === 'Verified' ? '✓' : 'Pending'}</span></td>
+            <td><span class="status-badge status-${seller.status.toLowerCase()}">${seller.status}</span></td>
+            <td>
+              <div class="action-buttons">
+                <button class="action-btn" onclick="viewSeller('${seller.id}')">View</button>
+                ${seller.status === 'Pending' ? `<button class="action-btn success" onclick="approveSeller('${seller.id}')">Approve</button>` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+        tbody.insertAdjacentHTML('beforeend', row);
+      });
+    }
+
+    async function loadProducts() {
+      try {
+        const response = await api.getAllProducts();
+        window.products = response.data || [];
+        refreshProductsTable();
+      } catch (error) {
+        console.error('Failed to load products:', error);
+      }
+    }
+
+    function refreshProductsTable() {
+      const tbody = document.querySelectorAll('table tbody')[1];
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      window.products.slice(0, 3).forEach(product => {
+        const row = `
+          <tr>
+            <td><strong>${product.name}</strong></td>
+            <td>${product.sellerName}</td>
+            <td>${product.category}</td>
+            <td>₹${product.price}</td>
+            <td>${product.stock}</td>
+            <td><span class="status-badge status-${product.status.toLowerCase().replace(' ', '-')}">${product.status}</span></td>
+            <td>
+              <div class="action-buttons">
+                <button class="action-btn" onclick="viewProduct('${product.id}')">View</button>
+                ${product.status === 'Pending Approval' ? `
+                  <button class="action-btn success" onclick="approveProduct('${product.id}', 'Active')">Approve</button>
+                  <button class="action-btn danger" onclick="approveProduct('${product.id}', 'Rejected')">Reject</button>
+                ` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+        tbody.insertAdjacentHTML('beforeend', row);
+      });
+    }
+
+    async function loadOrders() {
+      try {
+        const response = await api.getAllOrders();
+        window.orders = response.data || [];
+        refreshOrdersTable();
+      } catch (error) {
+        console.error('Failed to load orders:', error);
+      }
+    }
+
+    function refreshOrdersTable() {
+      const tbody = document.querySelectorAll('table tbody')[2];
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      window.orders.slice(0, 3).forEach(order => {
+        const row = `
+          <tr>
+            <td>${order.id}</td>
+            <td>${order.customerName}</td>
+            <td>${order.sellerName}</td>
+            <td>₹${order.totalAmount}</td>
+            <td>${order.items?.length || 0}</td>
+            <td><span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span></td>
+            <td>${new Date(order.placedAt).toLocaleDateString()}</td>
+            <td><button class="action-btn" onclick="viewOrder('${order.id}')">View</button></td>
+          </tr>
+        `;
+        tbody.insertAdjacentHTML('beforeend', row);
+      });
+    }
+
+    function loadSectionData(sectionId) {
+      if (sectionId === 'sellers') return loadSellers();
+      if (sectionId === 'products') return loadProducts();
+      if (sectionId === 'orders') return loadOrders();
+      return Promise.resolve();
+    }
+
+    // ============== NAVIGATION ============== 
+    function switchSection(sectionId) {
+      const sections = document.querySelectorAll('.dashboard-section');
+      sections.forEach(section => section.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+
+      document.querySelectorAll('.sidebar-nav-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+
+      const titleMap = {
+        overview: 'Platform Overview',
+        sellers: 'Seller Management',
+        products: 'Product Management',
+        orders: 'Order Management',
+        customers: 'Customer Management',
+        payments: 'Platform Payments',
+        payouts: 'Seller Payouts',
+        content: 'Content & Homepage',
+        analytics: 'Analytics & Insights',
+        support: 'Support Center',
+        settings: 'Platform Settings'
+      };
+      document.getElementById('headerTitle').textContent = titleMap[sectionId];
+
+      if (window.innerWidth <= 768) {
+        document.getElementById('sidebar').classList.add('mobile-hidden');
+      }
+    }
+
+    function applyInitialAdminSection() {
+      const params = new URLSearchParams(window.location.search);
+      const requestedSection = params.get('section') ||
+        sessionStorage.getItem('fr_admin_preview_section') ||
+        window.location.hash.replace('#', '') ||
+        'overview';
+
+      if (!requestedSection || requestedSection === 'overview' || !document.getElementById(requestedSection)) {
+        sessionStorage.removeItem('fr_admin_preview_section');
+        return;
+      }
+
+      switchSection(requestedSection);
+      loadSectionData(requestedSection);
+      sessionStorage.removeItem('fr_admin_preview_section');
+    }
+
+    // ============== TABS ============== 
+    function switchTab(tabId, event) {
+      event?.preventDefault();
+      const tabButton = event?.target;
+      const tabsContainer = tabButton?.closest('.tabs');
+      
+      if (tabsContainer) {
+        const allTabContents = tabsContainer.parentElement.querySelectorAll('.tab-content');
+        allTabContents.forEach(tab => tab.classList.remove('active'));
+        const allButtons = tabsContainer.querySelectorAll('.tab-button');
+        allButtons.forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        tabButton.classList.add('active');
+      }
+    }
+
+    // ============== SIDEBAR & HEADER ============== 
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('mobile-hidden');
+      document.getElementById('sidebar').classList.toggle('mobile-visible');
+    }
+
+    function toggleProfileDropdown() {
+      document.getElementById('profileMenu').classList.toggle('active');
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.profile-dropdown')) {
+        document.getElementById('profileMenu').classList.remove('active');
+      }
+    });
+
+    // ============== ACTION HANDLERS ============== 
+    function viewSeller(id) { 
+      const seller = window.sellers?.find(s => s.id === id);
+      openInfoPanel(
+        'Seller details',
+        `Store: ${seller?.storeName || 'Unknown'}\nEmail: ${seller?.email || 'Not available'}\nStatus: ${seller?.status || 'Unknown'}\nRating: ${seller?.rating || 'Not rated'}`,
+        'info'
+      );
+    }
+    
+    async function approveSeller(id) { 
+      try {
+        await api.updateSellerStatus(id, 'Active');
+        showPageToast('Seller approved successfully.', 'success', 'Seller updated');
+        await loadSellers();
+      } catch (error) {
+        showPageToast('Failed: ' + error.message, 'error', 'Seller update failed', 6000);
+      }
+    }
+    
+    async function rejectSeller(id) { 
+      try {
+        await api.updateSellerStatus(id, 'Rejected');
+        showPageToast('Seller rejected successfully.', 'warning', 'Seller updated');
+        await loadSellers();
+      } catch (error) {
+        showPageToast('Failed: ' + error.message, 'error', 'Seller update failed', 6000);
+      }
+    }
+    
+    function editCommission(id) {
+      openInfoPanel('Commission controls', 'Edit commission for seller #' + id + ' from this dashboard section.', 'info');
+    }
+    
+    function viewProduct(id) { 
+      const product = window.products?.find(p => p.id === id);
+      openInfoPanel(
+        'Product details',
+        `Product: ${product?.name || 'Unknown'}\nPrice: INR ${product?.price ?? 'N/A'}\nStock: ${product?.stock ?? 'N/A'}\nStatus: ${product?.status || 'Unknown'}`,
+        'info'
+      );
+    }
+    
+    async function approveProduct(id, status) { 
+      try {
+        await api.approveProduct(id, status);
+        showPageToast(`Product moved to ${status}.`, status === 'Rejected' ? 'warning' : 'success', 'Product updated');
+        await loadProducts();
+      } catch (error) {
+        showPageToast('Failed: ' + error.message, 'error', 'Product update failed', 6000);
+      }
+    }
+    
+    function rejectProduct(id) {
+      showPageToast('Product rejected: #' + id, 'warning', 'Product updated');
+    }
+
+    function markFeatured(id) {
+      showPageToast('Product marked as featured: #' + id, 'success', 'Homepage updated');
+    }
+    
+    function viewOrder(id) { 
+      const order = window.orders?.find(o => o.id === id);
+      openInfoPanel(
+        'Order details',
+        `Order: ${order?.id || id}\nCustomer: ${order?.customerName || 'Unknown'}\nAmount: INR ${order?.totalAmount ?? 'N/A'}\nStatus: ${order?.status || 'Unknown'}`,
+        'info'
+      );
+    }
+    
+    function cancelOrder(id) {
+      showPageToast('Order cancelled: #' + id, 'warning', 'Order updated');
+    }
+
+    function viewCustomer(id) {
+      openInfoPanel('Customer record', 'View customer #' + id + ' from the customer management section.', 'info');
+    }
+
+    function viewTransaction(id) {
+      openInfoPanel('Transaction record', 'Transaction reference: #TXN-00' + id, 'info');
+    }
+    
+    async function processPayout() { 
+      try {
+        const payouts = await api.getAllPayouts();
+        showPageToast(`Processing ${payouts.total} pending payouts.`, 'info', 'Payout batch');
+      } catch (error) {
+        showPageToast('Failed: ' + error.message, 'error', 'Payout batch failed', 6000);
+      }
+    }
+    
+    async function approvePayout(id) { 
+      try {
+        await api.approvePayout(id);
+        showPageToast('Payout approved successfully.', 'success', 'Payout updated');
+      } catch (error) {
+        showPageToast('Failed: ' + error.message, 'error', 'Payout update failed', 6000);
+      }
+    }
+    
+    function rejectPayout(id) {
+      showPageToast('Payout rejected: #' + id, 'warning', 'Payout updated');
+    }
+
+    function addBanner() {
+      showPageToast('Add new banner from the content manager panel.', 'info', 'Content action');
+    }
+
+    function editBanner(id) {
+      openInfoPanel('Banner editor', 'Edit banner #' + id + ' from the content manager panel.', 'info');
+    }
+
+    function deleteBanner(id) {
+      showPageToast('Banner deleted: #' + id, 'warning', 'Content updated');
+    }
+
+    function editCategory(id) {
+      openInfoPanel('Category editor', 'Edit category #' + id + ' from the catalog settings panel.', 'info');
+    }
+
+    function viewTicket(id) {
+      openInfoPanel('Support ticket', 'View ticket: #TK-C-00' + id, 'info');
+    }
+
+    function viewDocuments(id) {
+      openInfoPanel('Seller documents', 'Open seller documents for #' + id + ' from the verification workflow.', 'info');
+    }
+
+    function saveSettings() {
+      showPageToast('Settings saved successfully.', 'success', 'Platform settings');
+    }
+
+    function toggleNotifications() {
+      showPageToast('Notifications stay inside the dashboard now.', 'info', 'Notification center');
+    }
+
+    function logout() {
+      document.getElementById('profileMenu').classList.remove('active');
+      openPageAction({
+        tone: 'warning',
+        title: 'Log out of the admin dashboard?',
+        message: 'Your admin session will close and the login panel will return.',
+        confirmText: 'Log out',
+        pendingText: 'Logging out...',
+        onConfirm: () => {
+          api.logout();
+          document.getElementById('loginModal').classList.add('active');
+          document.getElementById('loginEmail').value = '';
+          document.getElementById('loginPassword').value = '';
+          document.getElementById('loginError').style.display = 'none';
+          showPageToast('You have been logged out.', 'info', 'Signed out');
+        }
+      });
+    }
+
+    window.addEventListener('resize', () => {
+      const sidebar = document.getElementById('sidebar');
+      if (window.innerWidth > 768) {
+        sidebar.classList.remove('mobile-hidden', 'mobile-visible');
+      }
+    });
+
+    // ============== CHARTS ============== 
+    let revenueChart = null;
+
+    function initRevenueChart() {
+      const ctx = document.getElementById('revenueChart');
+      if (!ctx) return;
+
+      revenueChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
+          datasets: [
+            {
+              label: 'Platform Revenue (₹)',
+              data: [450000, 520000, 580000, 625000, 720000, 850000, 920000, 1050000],
+              borderColor: '#000000',
+              backgroundColor: 'rgba(0, 0, 0, 0.05)',
+              borderWidth: 2,
+              fill: true,
+              tension: 0.4,
+              pointRadius: 4,
+              pointBackgroundColor: '#000000',
+              pointBorderColor: '#ffffff',
+              pointBorderWidth: 2,
+              pointHoverRadius: 6
+            },
+            {
+              label: 'Commission Earned (₹)',
+              data: [45000, 52000, 58000, 62500, 72000, 85000, 92000, 105000],
+              borderColor: '#4caf50',
+              backgroundColor: 'rgba(76, 175, 80, 0.05)',
+              borderWidth: 2,
+              fill: true,
+              tension: 0.4,
+              pointRadius: 4,
+              pointBackgroundColor: '#4caf50',
+              pointBorderColor: '#ffffff',
+              pointBorderWidth: 2,
+              pointHoverRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+              labels: {
+                usePointStyle: true,
+                padding: 20,
+                font: {
+                  size: 12,
+                  weight: '500'
+                },
+                color: '#666666'
+              }
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              padding: 12,
+              titleFont: {
+                size: 13,
+                weight: 'bold'
+              },
+              bodyFont: {
+                size: 12
+              },
+              cornerRadius: 4,
+              callbacks: {
+                label: function(context) {
+                  return context.dataset.label + ': ₹' + context.parsed.y.toLocaleString('en-IN');
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return '₹' + (value / 100000).toFixed(1) + 'L';
+                },
+                font: {
+                  size: 11
+                },
+                color: '#666666'
+              },
+              grid: {
+                color: 'rgba(0, 0, 0, 0.05)',
+                drawBorder: false
+              }
+            },
+            x: {
+              ticks: {
+                font: {
+                  size: 11
+                },
+                color: '#666666'
+              },
+              grid: {
+                display: false,
+                drawBorder: false
+              }
+            }
+          }
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('Admin Dashboard loaded');
+      checkAdminAuth();
+      initRevenueChart();
+    });
+
+    // Allow Enter key in login form
+    document.getElementById('loginPassword')?.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') performAdminLogin();
+    });
+
+    // Load data when switching sections
+    document.addEventListener('click', (e) => {
+      if (e.target.getAttribute('data-section') === 'sellers') loadSellers();
+      if (e.target.getAttribute('data-section') === 'products') loadProducts();
+      if (e.target.getAttribute('data-section') === 'orders') loadOrders();
+    });
+  </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>

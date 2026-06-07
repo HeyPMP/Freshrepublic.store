@@ -1,0 +1,34 @@
+{
+  "name": "fresh-republic",
+  "version": "1.0.0",
+  "description": "Fresh Republic - Full-featured e-commerce marketplace platform",
+  "private": true,
+  "workspaces": [
+    "marketplace-api"
+  ],
+  "scripts": {
+    "install-all": "npm install && cd marketplace-api && npm install",
+    "dev": "cd marketplace-api && npm run dev",
+    "start": "cd marketplace-api && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/fresh-republic.git"
+  },
+  "keywords": [
+    "ecommerce",
+    "marketplace",
+    "seller",
+    "admin",
+    "products",
+    "nodejs",
+    "express",
+    "mongodb"
+  ],
+  "author": "Fresh Republic Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yourusername/fresh-republic/issues"
+  },
+  "homepage": "https://github.com/yourusername/fresh-republic#readme"
+}

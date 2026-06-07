@@ -1,0 +1,1342 @@
+{
+  "meta": {
+    "nextSellerId": 407,
+    "nextCustomerId": 807,
+    "nextProductId": 9818,
+    "nextOrderId": 88019,
+    "nextPayoutId": 5405,
+    "nextCategoryId": 106
+  },
+  "adminProfile": {
+    "name": "Aarav Malhotra",
+    "email": "admin@freshrepublic.com",
+    "role": "Super Admin",
+    "twoFactorEnabled": true,
+    "avatar": "/Logo.png"
+  },
+  "platformSettings": {
+    "websiteName": "Fresh Republic",
+    "supportEmail": "support@freshrepublic.com",
+    "logo": "/Logo.png",
+    "deliveryPartner": "Shiprocket + Blue Dart",
+    "paymentGateway": "Razorpay + Stripe",
+    "taxRate": 18,
+    "maintenanceMode": false,
+    "allowCOD": true,
+    "autoApproveSellers": false
+  },
+  "commissionSettings": {
+    "platformCommission": 14,
+    "categoryWise": [
+      {
+        "category": "Jeans",
+        "percentage": 12
+      },
+      {
+        "category": "Sneakers",
+        "percentage": 15
+      },
+      {
+        "category": "Dresses",
+        "percentage": 16
+      },
+      {
+        "category": "Ethnic Wear",
+        "percentage": 13
+      },
+      {
+        "category": "Accessories",
+        "percentage": 14
+      }
+    ],
+    "sellerWise": [
+      {
+        "sellerId": "SEL-401",
+        "sellerName": "Urban Weave Co.",
+        "percentage": 12
+      },
+      {
+        "sellerId": "SEL-402",
+        "sellerName": "Luna Living",
+        "percentage": 14
+      },
+      {
+        "sellerId": "SEL-403",
+        "sellerName": "Northline Gear",
+        "percentage": 15
+      },
+      {
+        "sellerId": "SEL-404",
+        "sellerName": "Amber Nest Studio",
+        "percentage": 13
+      }
+    ]
+  },
+  "categories": [
+    {
+      "id": "CAT-101",
+      "name": "Jeans",
+      "parentCategory": "Fashion",
+      "subcategory": "Denim & Bottomwear",
+      "status": "Active",
+      "image": "/jeans.jpg"
+    },
+    {
+      "id": "CAT-102",
+      "name": "Sneakers",
+      "parentCategory": "Footwear",
+      "subcategory": "Street & Running Shoes",
+      "status": "Active",
+      "image": "/Sneakers.jpg"
+    },
+    {
+      "id": "CAT-103",
+      "name": "Dresses",
+      "parentCategory": "Women's Fashion",
+      "subcategory": "Midi, Occasion & Boutique Dresses",
+      "status": "Active",
+      "image": "/Dress.jpg"
+    },
+    {
+      "id": "CAT-104",
+      "name": "Ethnic Wear",
+      "parentCategory": "Women's Fashion",
+      "subcategory": "Kurtis, Sarees & Lehengas",
+      "status": "Active",
+      "image": "/Designer Kurtis.jpg"
+    },
+    {
+      "id": "CAT-105",
+      "name": "Accessories",
+      "parentCategory": "Fashion",
+      "subcategory": "Bags, Caps & Add-ons",
+      "status": "Active",
+      "image": "/Bag.jpg"
+    }
+  ],
+  "sellers": [
+    {
+      "id": "SEL-401",
+      "sellerName": "Prisha Mehta",
+      "storeName": "Urban Weave Co.",
+      "businessName": "Urban Weave Co.",
+      "businessEmail": "prisha@urbanweave.co",
+      "emailAddress": "prisha@urbanweave.co",
+      "phoneNumber": "9898012345",
+      "phone": "+91 98980 12345",
+      "password": "Seller@123",
+      "status": "Active",
+      "location": "Mumbai, Maharashtra",
+      "joinedAt": "2025-11-14T09:00:00+05:30",
+      "businessAddress": "18 Linking Road, Bandra West, Mumbai, Maharashtra 400050",
+      "gstNumber": "27AAECU9182R1ZQ",
+      "panNumber": "AAECU9182R",
+      "category": "Jeans",
+      "storeDescription": "Premium denim and elevated daily separates built for repeat purchase customers.",
+      "logo": "/Levis.jpg",
+      "tagline": "Premium denim and elevated wardrobe essentials.",
+      "rating": 4.8,
+      "onTimeDispatch": "97.8%",
+      "responseRate": "99.2%",
+      "commission": 12,
+      "bankDetails": {
+        "accountHolder": "Prisha Mehta",
+        "accountNumber": "XXXXXX8214",
+        "ifsc": "HDFC0001842",
+        "bankName": "HDFC Bank",
+        "upiId": "urbanweave@hdfcbank"
+      },
+      "deliverySettings": {
+        "selfShipEnabled": false,
+        "expressDelivery": true,
+        "freeShippingThreshold": 1499,
+        "processingTime": "24 hours",
+        "returnWindow": "7 days"
+      }
+    },
+    {
+      "id": "SEL-402",
+      "sellerName": "Anaya Shah",
+      "storeName": "Luna Living",
+      "businessName": "Luna Living",
+      "businessEmail": "anaya@lunaliving.in",
+      "emailAddress": "anaya@lunaliving.in",
+      "phoneNumber": "9930088441",
+      "phone": "+91 99300 88441",
+      "password": "Seller@123",
+      "status": "Active",
+      "location": "Ahmedabad, Gujarat",
+      "joinedAt": "2025-10-28T10:30:00+05:30",
+      "businessAddress": "22 Satellite Road, Ahmedabad, Gujarat 380015",
+      "gstNumber": "24AACCL1922M1ZU",
+      "panNumber": "AACCL1922M",
+      "category": "Dresses",
+      "storeDescription": "Fashion-led women's looks and boutique occasionwear for fast-moving marketplace demand.",
+      "logo": "/Zara.jpg",
+      "tagline": "Contemporary boutique fashion for festive and everyday edits.",
+      "rating": 4.6,
+      "onTimeDispatch": "96.9%",
+      "responseRate": "98.4%",
+      "commission": 14,
+      "bankDetails": {
+        "accountHolder": "Anaya Shah",
+        "accountNumber": "XXXXXX1126",
+        "ifsc": "ICIC0001188",
+        "bankName": "ICICI Bank",
+        "upiId": "lunaliving@icici"
+      },
+      "deliverySettings": {
+        "selfShipEnabled": true,
+        "expressDelivery": false,
+        "freeShippingThreshold": 1999,
+        "processingTime": "48 hours",
+        "returnWindow": "10 days"
+      }
+    },
+    {
+      "id": "SEL-403",
+      "sellerName": "Kabir Khanna",
+      "storeName": "Northline Gear",
+      "businessName": "Northline Gear",
+      "businessEmail": "kabir@northlinegear.com",
+      "emailAddress": "kabir@northlinegear.com",
+      "phoneNumber": "9811045221",
+      "phone": "+91 98110 45221",
+      "password": "Seller@123",
+      "status": "Pending",
+      "location": "Delhi NCR",
+      "joinedAt": "2026-04-23T11:00:00+05:30",
+      "businessAddress": "44 Community Center, Saket, New Delhi 110017",
+      "gstNumber": "07AACCN9913A1ZZ",
+      "panNumber": "AACCN9913A",
+      "category": "Sneakers",
+      "storeDescription": "Performance basics and sports-inspired styles for active shoppers.",
+      "logo": "/Nike.jpg",
+      "tagline": "Performance-first footwear and sport utility styles.",
+      "rating": 4.3,
+      "onTimeDispatch": "95.2%",
+      "responseRate": "97.1%",
+      "commission": 15,
+      "bankDetails": {
+        "accountHolder": "Kabir Khanna",
+        "accountNumber": "XXXXXX6625",
+        "ifsc": "SBIN0001813",
+        "bankName": "State Bank of India",
+        "upiId": "northline@sbi"
+      },
+      "deliverySettings": {
+        "selfShipEnabled": false,
+        "expressDelivery": true,
+        "freeShippingThreshold": 2499,
+        "processingTime": "24 hours",
+        "returnWindow": "7 days"
+      }
+    },
+    {
+      "id": "SEL-404",
+      "sellerName": "Mira Rao",
+      "storeName": "Amber Nest Studio",
+      "businessName": "Amber Nest Studio",
+      "businessEmail": "mira@amberneststudio.com",
+      "emailAddress": "mira@amberneststudio.com",
+      "phoneNumber": "9987012467",
+      "phone": "+91 99870 12467",
+      "password": "Seller@123",
+      "status": "Active",
+      "location": "Hyderabad, Telangana",
+      "joinedAt": "2026-02-18T14:00:00+05:30",
+      "businessAddress": "7 Jubilee Hills Road, Hyderabad, Telangana 500033",
+      "gstNumber": "36AANCA4412P1Z5",
+      "panNumber": "AANCA4412P",
+      "category": "Ethnic Wear",
+      "storeDescription": "Ethnic and occasion-led curated edits with premium imagery and strong repeat demand.",
+      "logo": "/Designer Sarees.jpg",
+      "tagline": "Festive and boutique occasionwear with marketplace-ready styling.",
+      "rating": 4.7,
+      "onTimeDispatch": "98.2%",
+      "responseRate": "99.0%",
+      "commission": 13,
+      "bankDetails": {
+        "accountHolder": "Mira Rao",
+        "accountNumber": "XXXXXX7421",
+        "ifsc": "HDFC0002462",
+        "bankName": "HDFC Bank",
+        "upiId": "ambernest@hdfc"
+      },
+      "deliverySettings": {
+        "selfShipEnabled": false,
+        "expressDelivery": true,
+        "freeShippingThreshold": 1799,
+        "processingTime": "24 hours",
+        "returnWindow": "7 days"
+      }
+    },
+    {
+      "id": "SEL-405",
+      "sellerName": "Ritwik Sinha",
+      "storeName": "Bolt Footwear",
+      "businessName": "Bolt Footwear",
+      "businessEmail": "ritwik@boltfootwear.in",
+      "emailAddress": "ritwik@boltfootwear.in",
+      "phoneNumber": "9901140123",
+      "phone": "+91 99011 40123",
+      "password": "Seller@123",
+      "status": "Suspended",
+      "location": "Bengaluru, Karnataka",
+      "joinedAt": "2025-09-11T12:15:00+05:30",
+      "businessAddress": "65 Indiranagar 100 Feet Road, Bengaluru, Karnataka 560038",
+      "gstNumber": "29AAECB7124L1ZS",
+      "panNumber": "AAECB7124L",
+      "category": "Sneakers",
+      "storeDescription": "Footwear-focused store temporarily suspended pending catalog policy checks.",
+      "logo": "/Puma.jpg",
+      "tagline": "Suspended catalog pending policy review.",
+      "rating": 4.1,
+      "onTimeDispatch": "92.8%",
+      "responseRate": "94.3%",
+      "commission": 16,
+      "bankDetails": {
+        "accountHolder": "Ritwik Sinha",
+        "accountNumber": "XXXXXX2194",
+        "ifsc": "AXIS0000412",
+        "bankName": "Axis Bank",
+        "upiId": "boltfootwear@axis"
+      },
+      "deliverySettings": {
+        "selfShipEnabled": true,
+        "expressDelivery": false,
+        "freeShippingThreshold": 2499,
+        "processingTime": "48 hours",
+        "returnWindow": "7 days"
+      }
+    },
+    {
+      "id": "SEL-406",
+      "sellerName": "Demo Seller",
+      "storeName": "Fresh Republic Demo Store",
+      "businessName": "Fresh Republic Demo Store",
+      "businessEmail": "seller@example.com",
+      "emailAddress": "seller@example.com",
+      "phoneNumber": "9876543210",
+      "phone": "+91 98765 43210",
+      "password": "Password123",
+      "status": "Active",
+      "location": "Mumbai, Maharashtra",
+      "joinedAt": "2026-04-29T10:00:00+05:30",
+      "businessAddress": "100 Demo Street, Lower Parel, Mumbai, Maharashtra 400013",
+      "gstNumber": "27AAECD1234F1ZP",
+      "panNumber": "AAECD1234F",
+      "category": "Jeans",
+      "storeDescription": "Demo seller account for testing the Fresh Republic seller login and dashboard experience.",
+      "logo": "/Logo.png",
+      "tagline": "Demo storefront for seller flow testing.",
+      "rating": 4.8,
+      "onTimeDispatch": "98.0%",
+      "responseRate": "99.0%",
+      "commission": 12,
+      "bankDetails": {
+        "accountHolder": "Demo Seller",
+        "accountNumber": "XXXXXX5406",
+        "ifsc": "HDFC0005406",
+        "bankName": "HDFC Bank",
+        "upiId": "sellerdemo@hdfc"
+      },
+      "deliverySettings": {
+        "selfShipEnabled": true,
+        "expressDelivery": true,
+        "freeShippingThreshold": 1499,
+        "processingTime": "24 hours",
+        "returnWindow": "7 days"
+      }
+    }
+  ],
+  "customers": [
+    {
+      "id": "CUS-801",
+      "identifier": "neha.sethi@gmail.com",
+      "name": "Neha Sethi",
+      "email": "neha.sethi@gmail.com",
+      "phone": "9876522281",
+      "password": "Fresh@123",
+      "accountStatus": "Active",
+      "joinedAt": "2025-12-20T09:00:00+05:30",
+      "location": "Pune, Maharashtra",
+      "gender": "Female",
+      "dateOfBirth": "1997-08-11"
+    },
+    {
+      "id": "CUS-802",
+      "identifier": "arjunrao@gmail.com",
+      "name": "Arjun Rao",
+      "email": "arjunrao@gmail.com",
+      "phone": "9988112366",
+      "password": "Fresh@123",
+      "accountStatus": "Active",
+      "joinedAt": "2025-10-03T09:00:00+05:30",
+      "location": "Chennai, Tamil Nadu",
+      "gender": "Male",
+      "dateOfBirth": "1995-02-17"
+    },
+    {
+      "id": "CUS-803",
+      "identifier": "sana.khan@gmail.com",
+      "name": "Sana Khan",
+      "email": "sana.khan@gmail.com",
+      "phone": "9839088772",
+      "password": "Fresh@123",
+      "accountStatus": "Blocked",
+      "joinedAt": "2026-01-17T09:00:00+05:30",
+      "location": "Lucknow, Uttar Pradesh",
+      "gender": "Female",
+      "dateOfBirth": "1999-03-28"
+    },
+    {
+      "id": "CUS-804",
+      "identifier": "rahul.bansal@gmail.com",
+      "name": "Rahul Bansal",
+      "email": "rahul.bansal@gmail.com",
+      "phone": "9811519151",
+      "password": "Fresh@123",
+      "accountStatus": "Active",
+      "joinedAt": "2025-07-21T09:00:00+05:30",
+      "location": "Delhi NCR",
+      "gender": "Male",
+      "dateOfBirth": "1991-09-02"
+    },
+    {
+      "id": "CUS-805",
+      "identifier": "aditi.menon@gmail.com",
+      "name": "Aditi Menon",
+      "email": "aditi.menon@gmail.com",
+      "phone": "9967055712",
+      "password": "Fresh@123",
+      "accountStatus": "Review",
+      "joinedAt": "2026-02-11T09:00:00+05:30",
+      "location": "Kochi, Kerala",
+      "gender": "Female",
+      "dateOfBirth": "1996-05-19"
+    },
+    {
+      "id": "CUS-806",
+      "identifier": "ishaan.verma@gmail.com",
+      "name": "Ishaan Verma",
+      "email": "ishaan.verma@gmail.com",
+      "phone": "9958822001",
+      "password": "Fresh@123",
+      "accountStatus": "Active",
+      "joinedAt": "2025-11-30T09:00:00+05:30",
+      "location": "Noida, Uttar Pradesh",
+      "gender": "Male",
+      "dateOfBirth": "1994-12-06"
+    }
+  ],
+  "products": [
+    {
+      "id": "PRD-9817",
+      "sellerId": "SEL-406",
+      "name": "Portal Sync Preview 133243",
+      "category": "Jeans",
+      "gender": "",
+      "price": 2499,
+      "discountPrice": 2199,
+      "stock": 14,
+      "status": "Active",
+      "brand": "Fresh Republic",
+      "sizes": [
+        "M",
+        "L"
+      ],
+      "colors": [
+        "Black",
+        "Blue"
+      ],
+      "description": "Temporary preview product for portal sync verification.",
+      "image": "/jeans.jpg",
+      "images": [
+        "/jeans.jpg"
+      ],
+      "fabric": "",
+      "fit": "",
+      "occasion": "",
+      "styleHighlights": "",
+      "sleeveType": "",
+      "neckType": "",
+      "createdAt": "2026-04-30T08:02:43.553Z",
+      "updatedAt": "2026-04-30T08:02:43.554Z"
+    },
+    {
+      "id": "PRD-9815",
+      "sellerId": "SEL-406",
+      "name": "Debug Product 132708",
+      "category": "Jeans",
+      "gender": "",
+      "price": 1999,
+      "discountPrice": 1799,
+      "stock": 5,
+      "status": "Active",
+      "brand": "Fresh Republic",
+      "sizes": [],
+      "colors": [],
+      "description": "debug",
+      "image": "/jeans.jpg",
+      "images": [
+        "/jeans.jpg"
+      ],
+      "fabric": "",
+      "fit": "",
+      "occasion": "",
+      "styleHighlights": "",
+      "sleeveType": "",
+      "neckType": "",
+      "createdAt": "2026-04-30T07:57:08.952Z",
+      "updatedAt": "2026-04-30T07:57:08.952Z"
+    },
+    {
+      "id": "PRD-9814",
+      "sellerId": "SEL-405",
+      "name": "Debug Product 132341",
+      "category": "Jeans",
+      "gender": "",
+      "price": 1999,
+      "discountPrice": 1799,
+      "stock": 5,
+      "status": "Active",
+      "brand": "Fresh Republic",
+      "sizes": [],
+      "colors": [],
+      "description": "debug",
+      "image": "/jeans.jpg",
+      "images": [
+        "/jeans.jpg"
+      ],
+      "fabric": "",
+      "fit": "",
+      "occasion": "",
+      "styleHighlights": "",
+      "sleeveType": "",
+      "neckType": "",
+      "createdAt": "2026-04-30T07:53:41.637Z",
+      "updatedAt": "2026-04-30T07:53:41.637Z"
+    },
+    {
+      "id": "PRD-9813",
+      "sellerId": "SEL-405",
+      "name": "Preview Sync Product 132048",
+      "category": "Jeans",
+      "gender": "",
+      "price": 2499,
+      "discountPrice": 2199,
+      "stock": 14,
+      "status": "Active",
+      "brand": "Fresh Republic",
+      "sizes": [
+        "M",
+        "L"
+      ],
+      "colors": [
+        "Black",
+        "Blue"
+      ],
+      "description": "Preview product created to verify seller, admin, and customer portal sync.",
+      "image": "/jeans.jpg",
+      "images": [
+        "/jeans.jpg"
+      ],
+      "fabric": "",
+      "fit": "",
+      "occasion": "",
+      "styleHighlights": "",
+      "sleeveType": "",
+      "neckType": "",
+      "createdAt": "2026-04-30T07:50:49.559Z",
+      "updatedAt": "2026-04-30T07:50:49.559Z"
+    },
+    {
+      "id": "PRD-9801",
+      "sellerId": "SEL-401",
+      "name": "Armani Straight Fit Jeans",
+      "category": "Jeans",
+      "gender": "men",
+      "price": 2499,
+      "discountPrice": 2199,
+      "stock": 34,
+      "status": "Active",
+      "brand": "Armani",
+      "sizes": [
+        "30",
+        "32",
+        "34",
+        "36"
+      ],
+      "colors": [
+        "Blue"
+      ],
+      "description": "Premium straight-fit denim with a clean mid-wash finish and all-day structure.",
+      "image": "/categories/jeans/Armani Jeans/Armani Jeans (1).jpg",
+      "images": [
+        "/categories/jeans/Armani Jeans/Armani Jeans (1).jpg",
+        "/categories/jeans/Armani Jeans/Armani Jeans (2).jpg",
+        "/categories/jeans/Armani Jeans/Armani Jeans (3).jpg",
+        "/categories/jeans/Armani Jeans/Armani Jeans (4).jpg"
+      ],
+      "fabric": "Premium cotton denim",
+      "fit": "Straight fit",
+      "occasion": "Casual",
+      "styleHighlights": "Mid wash, structured silhouette, premium denim texture",
+      "sleeveType": "Not applicable",
+      "neckType": "Not applicable",
+      "createdAt": "2026-03-20T11:20:00+05:30",
+      "updatedAt": "2026-04-24T11:20:00+05:30"
+    },
+    {
+      "id": "PRD-9802",
+      "sellerId": "SEL-403",
+      "name": "Northline Runner Sneakers",
+      "category": "Sneakers",
+      "gender": "men",
+      "price": 3299,
+      "discountPrice": 2899,
+      "stock": 26,
+      "status": "Pending Approval",
+      "brand": "Northline",
+      "sizes": [
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "colors": [
+        "White",
+        "Black"
+      ],
+      "description": "Lightweight running sneakers with responsive cushioning and breathable uppers.",
+      "image": "/Sneakers.jpg",
+      "images": [
+        "/Sneakers.jpg"
+      ],
+      "fabric": "Mesh and synthetic upper",
+      "fit": "Regular fit",
+      "occasion": "Sport",
+      "styleHighlights": "Performance sole, lightweight build, neutral everyday styling",
+      "sleeveType": "Not applicable",
+      "neckType": "Not applicable",
+      "createdAt": "2026-04-23T12:30:00+05:30",
+      "updatedAt": "2026-04-23T12:30:00+05:30"
+    },
+    {
+      "id": "PRD-9803",
+      "sellerId": "SEL-401",
+      "name": "Urban Weave Relaxed Hoodie",
+      "category": "Hoodie",
+      "gender": "men",
+      "price": 1899,
+      "discountPrice": 1599,
+      "stock": 14,
+      "status": "Active",
+      "brand": "Urban Weave",
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        "Black",
+        "Grey"
+      ],
+      "description": "Heavyweight fleece hoodie designed for cool evenings and repeat wear.",
+      "image": "/Hoodie.jpg",
+      "images": [
+        "/Hoodie.jpg"
+      ],
+      "fabric": "Cotton fleece",
+      "fit": "Relaxed fit",
+      "occasion": "Casual",
+      "styleHighlights": "Dropped shoulder, soft brushed interior, clean front finish",
+      "sleeveType": "Full sleeve",
+      "neckType": "Hooded",
+      "createdAt": "2026-03-25T15:15:00+05:30",
+      "updatedAt": "2026-04-21T09:40:00+05:30"
+    },
+    {
+      "id": "PRD-9804",
+      "sellerId": "SEL-402",
+      "name": "Boutique Evening Dress",
+      "category": "Dresses",
+      "gender": "women",
+      "price": 2799,
+      "discountPrice": 2399,
+      "stock": 19,
+      "status": "Active",
+      "brand": "Luna Living",
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colors": [
+        "Black",
+        "Gold"
+      ],
+      "description": "Event-ready evening dress with soft drape and polished boutique finishing.",
+      "image": "/Boutique Dresses.jpg",
+      "images": [
+        "/Boutique Dresses.jpg"
+      ],
+      "fabric": "Poly blend",
+      "fit": "Tailored fit",
+      "occasion": "Party",
+      "styleHighlights": "Boutique silhouette, elevated finish, occasion-ready styling",
+      "sleeveType": "Sleeveless",
+      "neckType": "Round neck",
+      "createdAt": "2026-03-28T16:00:00+05:30",
+      "updatedAt": "2026-04-20T10:00:00+05:30"
+    },
+    {
+      "id": "PRD-9805",
+      "sellerId": "SEL-404",
+      "name": "Designer Kurti Edit",
+      "category": "Designer Kurtis",
+      "gender": "women",
+      "price": 1999,
+      "discountPrice": 1799,
+      "stock": 22,
+      "status": "Active",
+      "brand": "Amber Nest",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        "Maroon",
+        "Gold"
+      ],
+      "description": "Festive kurti with boutique detailing and polished finishing for occasionwear demand.",
+      "image": "/Designer Kurtis.jpg",
+      "images": [
+        "/Designer Kurtis.jpg"
+      ],
+      "fabric": "Silk blend",
+      "fit": "Regular fit",
+      "occasion": "Festive",
+      "styleHighlights": "Boutique embroidery, festive palette, occasion-ready drape",
+      "sleeveType": "Three-quarter sleeve",
+      "neckType": "V neck",
+      "createdAt": "2026-03-29T13:10:00+05:30",
+      "updatedAt": "2026-04-22T13:10:00+05:30"
+    },
+    {
+      "id": "PRD-9806",
+      "sellerId": "SEL-404",
+      "name": "Kurta Set Celebration",
+      "category": "Kurta Sets",
+      "gender": "women",
+      "price": 2599,
+      "discountPrice": 2299,
+      "stock": 8,
+      "status": "Active",
+      "brand": "Amber Nest",
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        "Blue",
+        "Beige"
+      ],
+      "description": "Multi-piece kurta set designed for festive calendars and premium gifting occasions.",
+      "image": "/Kurta Sets.jpg",
+      "images": [
+        "/Kurta Sets.jpg"
+      ],
+      "fabric": "Cotton silk",
+      "fit": "Regular fit",
+      "occasion": "Festive",
+      "styleHighlights": "Coordinated set, premium finish, occasion-led palette",
+      "sleeveType": "Three-quarter sleeve",
+      "neckType": "Mandarin neck",
+      "createdAt": "2026-03-28T10:20:00+05:30",
+      "updatedAt": "2026-04-25T10:20:00+05:30"
+    },
+    {
+      "id": "PRD-9807",
+      "sellerId": "SEL-404",
+      "name": "Designer Saree Occasion",
+      "category": "Designer Sarees",
+      "gender": "women",
+      "price": 3999,
+      "discountPrice": 3499,
+      "stock": 6,
+      "status": "Active",
+      "brand": "Amber Nest",
+      "sizes": [
+        "Free Size"
+      ],
+      "colors": [
+        "Red",
+        "Gold"
+      ],
+      "description": "Wedding and celebration saree edit with strong visual detail and boutique finish.",
+      "image": "/Designer Sarees.jpg",
+      "images": [
+        "/Designer Sarees.jpg"
+      ],
+      "fabric": "Satin blend",
+      "fit": "Draped fit",
+      "occasion": "Wedding",
+      "styleHighlights": "Festive shine, premium drape, boutique finish",
+      "sleeveType": "Not applicable",
+      "neckType": "Not applicable",
+      "createdAt": "2026-03-18T14:50:00+05:30",
+      "updatedAt": "2026-04-19T14:50:00+05:30"
+    },
+    {
+      "id": "PRD-9808",
+      "sellerId": "SEL-402",
+      "name": "Summer Day Dress",
+      "category": "Dresses",
+      "gender": "women",
+      "price": 1999,
+      "discountPrice": 1699,
+      "stock": 0,
+      "status": "Out of Stock",
+      "brand": "Luna Living",
+      "sizes": [
+        "XS",
+        "S",
+        "M"
+      ],
+      "colors": [
+        "White",
+        "Yellow"
+      ],
+      "description": "Breezy day dress for warm weather wardrobes and high-conversion summer edits.",
+      "image": "/Dress.jpg",
+      "images": [
+        "/Dress.jpg"
+      ],
+      "fabric": "Cotton blend",
+      "fit": "Regular fit",
+      "occasion": "Casual",
+      "styleHighlights": "Lightweight fabric, easy movement, warm-weather styling",
+      "sleeveType": "Short sleeve",
+      "neckType": "Square neck",
+      "createdAt": "2026-04-01T11:05:00+05:30",
+      "updatedAt": "2026-04-26T18:40:00+05:30"
+    },
+    {
+      "id": "PRD-9809",
+      "sellerId": "SEL-401",
+      "name": "Urban Denim Shirt",
+      "category": "Shirts",
+      "gender": "men",
+      "price": 1499,
+      "discountPrice": 1299,
+      "stock": 17,
+      "status": "Active",
+      "brand": "Urban Weave",
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        "Blue"
+      ],
+      "description": "Denim shirt built for everyday layering and casual weekday dressing.",
+      "image": "/Shirt.jpg",
+      "images": [
+        "/Shirt.jpg"
+      ],
+      "fabric": "Cotton denim",
+      "fit": "Regular fit",
+      "occasion": "Casual",
+      "styleHighlights": "Denim texture, layering-ready, easy neutral styling",
+      "sleeveType": "Full sleeve",
+      "neckType": "Collar neck",
+      "createdAt": "2026-03-26T09:20:00+05:30",
+      "updatedAt": "2026-04-24T09:20:00+05:30"
+    },
+    {
+      "id": "PRD-9810",
+      "sellerId": "SEL-404",
+      "name": "Lehenga Celebration Set",
+      "category": "Lehengas",
+      "gender": "women",
+      "price": 5999,
+      "discountPrice": 5299,
+      "stock": 5,
+      "status": "Pending Approval",
+      "brand": "Amber Nest",
+      "sizes": [
+        "M",
+        "L"
+      ],
+      "colors": [
+        "Pink",
+        "Yellow"
+      ],
+      "description": "High-value occasion lehenga set submitted for review with boutique festive styling.",
+      "image": "/Lehengas.jpg",
+      "images": [
+        "/Lehengas.jpg"
+      ],
+      "fabric": "Embroidered net",
+      "fit": "Tailored fit",
+      "occasion": "Wedding",
+      "styleHighlights": "Festive embroidery, full-volume silhouette, bridal-event ready",
+      "sleeveType": "Half sleeve",
+      "neckType": "Sweetheart neck",
+      "createdAt": "2026-04-27T08:00:00+05:30",
+      "updatedAt": "2026-04-27T08:00:00+05:30"
+    },
+    {
+      "id": "PRD-9811",
+      "sellerId": "SEL-401",
+      "name": "Leather Carryall Tote",
+      "category": "Bags",
+      "gender": "women",
+      "price": 3199,
+      "discountPrice": 2799,
+      "stock": 11,
+      "status": "Rejected",
+      "brand": "Urban Weave",
+      "sizes": [
+        "Free Size"
+      ],
+      "colors": [
+        "Brown"
+      ],
+      "description": "Structured tote bag currently rejected pending additional product imagery.",
+      "image": "/Bag.jpg",
+      "images": [
+        "/Bag.jpg"
+      ],
+      "fabric": "Leatherette",
+      "fit": "Structured",
+      "occasion": "Casual",
+      "styleHighlights": "Large carry shape, utility pocketing, structured silhouette",
+      "sleeveType": "Not applicable",
+      "neckType": "Not applicable",
+      "createdAt": "2026-04-10T09:55:00+05:30",
+      "updatedAt": "2026-04-23T17:10:00+05:30"
+    },
+    {
+      "id": "PRD-9812",
+      "sellerId": "SEL-404",
+      "name": "Boutique Satin Saree",
+      "category": "Designer Sarees",
+      "gender": "women",
+      "price": 4299,
+      "discountPrice": 3799,
+      "stock": 4,
+      "status": "Draft",
+      "brand": "Amber Nest",
+      "sizes": [
+        "Free Size"
+      ],
+      "colors": [
+        "Black",
+        "Silver"
+      ],
+      "description": "Draft premium saree listing still being prepared for marketplace moderation.",
+      "image": "/Designer Sarees.jpg",
+      "images": [
+        "/Designer Sarees.jpg"
+      ],
+      "fabric": "Satin",
+      "fit": "Draped fit",
+      "occasion": "Party",
+      "styleHighlights": "Gloss finish, statement contrast, boutique event styling",
+      "sleeveType": "Not applicable",
+      "neckType": "Not applicable",
+      "createdAt": "2026-04-26T15:30:00+05:30",
+      "updatedAt": "2026-04-26T15:30:00+05:30"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD-88012",
+      "customerId": "CUS-801",
+      "sellerId": "SEL-401",
+      "productId": "PRD-9801",
+      "quantity": 2,
+      "amount": 4398,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderStatus": "Packed",
+      "deliveryStatus": "Pickup Scheduled",
+      "placedAt": "2026-04-27T09:15:00+05:30",
+      "estimatedDelivery": "2026-04-30T18:00:00+05:30",
+      "shippingAddress": "Kalyani Nagar, Pune, Maharashtra 411014",
+      "items": [
+        {
+          "productId": "PRD-9801",
+          "name": "Armani Straight Fit Jeans",
+          "variant": "Blue / 32",
+          "quantity": 2,
+          "price": 2199
+        }
+      ]
+    },
+    {
+      "id": "ORD-88011",
+      "customerId": "CUS-802",
+      "sellerId": "SEL-404",
+      "productId": "PRD-9805",
+      "quantity": 1,
+      "amount": 1799,
+      "paymentMethod": "Card",
+      "paymentStatus": "Paid",
+      "orderStatus": "Shipped",
+      "deliveryStatus": "In Transit",
+      "placedAt": "2026-04-27T08:20:00+05:30",
+      "estimatedDelivery": "2026-04-29T19:00:00+05:30",
+      "shippingAddress": "Adyar, Chennai, Tamil Nadu 600020",
+      "items": [
+        {
+          "productId": "PRD-9805",
+          "name": "Designer Kurti Edit",
+          "variant": "Maroon / M",
+          "quantity": 1,
+          "price": 1799
+        }
+      ]
+    },
+    {
+      "id": "ORD-88010",
+      "customerId": "CUS-804",
+      "sellerId": "SEL-402",
+      "productId": "PRD-9804",
+      "quantity": 1,
+      "amount": 2399,
+      "paymentMethod": "COD",
+      "paymentStatus": "COD",
+      "orderStatus": "Processing",
+      "deliveryStatus": "Awaiting Dispatch",
+      "placedAt": "2026-04-26T18:20:00+05:30",
+      "estimatedDelivery": "2026-04-30T19:00:00+05:30",
+      "shippingAddress": "Dwarka, New Delhi 110075",
+      "items": [
+        {
+          "productId": "PRD-9804",
+          "name": "Boutique Evening Dress",
+          "variant": "Black / M",
+          "quantity": 1,
+          "price": 2399
+        }
+      ]
+    },
+    {
+      "id": "ORD-88009",
+      "customerId": "CUS-805",
+      "sellerId": "SEL-404",
+      "productId": "PRD-9807",
+      "quantity": 1,
+      "amount": 3499,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "deliveryStatus": "Label Created",
+      "placedAt": "2026-04-26T14:42:00+05:30",
+      "estimatedDelivery": "2026-05-01T19:00:00+05:30",
+      "shippingAddress": "Panampilly Nagar, Kochi, Kerala 682036",
+      "items": [
+        {
+          "productId": "PRD-9807",
+          "name": "Designer Saree Occasion",
+          "variant": "Red / Free Size",
+          "quantity": 1,
+          "price": 3499
+        }
+      ]
+    },
+    {
+      "id": "ORD-88008",
+      "customerId": "CUS-806",
+      "sellerId": "SEL-401",
+      "productId": "PRD-9809",
+      "quantity": 2,
+      "amount": 2598,
+      "paymentMethod": "Card",
+      "paymentStatus": "Paid",
+      "orderStatus": "Delivered",
+      "deliveryStatus": "Delivered",
+      "placedAt": "2026-04-25T14:10:00+05:30",
+      "estimatedDelivery": "2026-04-28T18:00:00+05:30",
+      "shippingAddress": "Sector 62, Noida, Uttar Pradesh 201309",
+      "items": [
+        {
+          "productId": "PRD-9809",
+          "name": "Urban Denim Shirt",
+          "variant": "Blue / L",
+          "quantity": 2,
+          "price": 1299
+        }
+      ]
+    },
+    {
+      "id": "ORD-88007",
+      "customerId": "CUS-801",
+      "sellerId": "SEL-404",
+      "productId": "PRD-9806",
+      "quantity": 1,
+      "amount": 2299,
+      "paymentMethod": "Wallet",
+      "paymentStatus": "Paid",
+      "orderStatus": "Delivered",
+      "deliveryStatus": "Delivered",
+      "placedAt": "2026-04-24T12:35:00+05:30",
+      "estimatedDelivery": "2026-04-27T18:00:00+05:30",
+      "shippingAddress": "Kalyani Nagar, Pune, Maharashtra 411014",
+      "items": [
+        {
+          "productId": "PRD-9806",
+          "name": "Kurta Set Celebration",
+          "variant": "Blue / L",
+          "quantity": 1,
+          "price": 2299
+        }
+      ]
+    }
+  ],
+  "payoutRequests": [
+    {
+      "id": "PAY-5401",
+      "sellerId": "SEL-401",
+      "requestDate": "2026-04-27T09:00:00+05:30",
+      "grossAmount": 182000,
+      "commissionAmount": 21840,
+      "payableAmount": 160160,
+      "status": "Pending"
+    },
+    {
+      "id": "PAY-5400",
+      "sellerId": "SEL-404",
+      "requestDate": "2026-04-26T14:20:00+05:30",
+      "grossAmount": 146800,
+      "commissionAmount": 19084,
+      "payableAmount": 127716,
+      "status": "Pending"
+    },
+    {
+      "id": "PAY-5397",
+      "sellerId": "SEL-402",
+      "requestDate": "2026-04-24T10:10:00+05:30",
+      "grossAmount": 224000,
+      "commissionAmount": 31360,
+      "payableAmount": 192640,
+      "status": "Completed"
+    },
+    {
+      "id": "PAY-5393",
+      "sellerId": "SEL-405",
+      "requestDate": "2026-04-23T16:00:00+05:30",
+      "grossAmount": 98800,
+      "commissionAmount": 15808,
+      "payableAmount": 82992,
+      "status": "Rejected"
+    }
+  ],
+  "paymentHistory": [
+    {
+      "id": "TRX-20091",
+      "date": "2026-04-27T08:00:00+05:30",
+      "type": "Customer Payment",
+      "party": "Neha Sethi",
+      "amount": 4398,
+      "status": "Captured"
+    },
+    {
+      "id": "TRX-20087",
+      "date": "2026-04-26T19:00:00+05:30",
+      "type": "Payout",
+      "party": "Luna Living",
+      "amount": 192640,
+      "status": "Settled"
+    },
+    {
+      "id": "TRX-20084",
+      "date": "2026-04-26T12:00:00+05:30",
+      "type": "Commission",
+      "party": "Platform",
+      "amount": 19084,
+      "status": "Booked"
+    },
+    {
+      "id": "TRX-20072",
+      "date": "2026-04-25T14:30:00+05:30",
+      "type": "Refund Reserve",
+      "party": "Urban Weave Co.",
+      "amount": 6400,
+      "status": "Held"
+    }
+  ],
+  "adminNotifications": [
+    {
+      "id": "NTF-1777536163554",
+      "type": "product",
+      "title": "Portal Sync Preview 133243 is now live",
+      "body": "Seller SEL-406 added Portal Sync Preview 133243 and it is live in the marketplace catalog.",
+      "createdAt": "2026-04-30T08:02:43.554Z",
+      "read": false
+    },
+    {
+      "id": "NTF-1777535889447",
+      "type": "product",
+      "title": "Preview Sync Product 132802 was removed by the seller",
+      "body": "The product was deleted from the seller catalog and is no longer visible.",
+      "createdAt": "2026-04-30T07:58:09.448Z",
+      "read": false
+    },
+    {
+      "id": "NTF-1777535883051",
+      "type": "product",
+      "title": "Preview Sync Product 132802 is now live",
+      "body": "Seller SEL-406 added Preview Sync Product 132802 and it is live in the marketplace catalog.",
+      "createdAt": "2026-04-30T07:58:03.051Z",
+      "read": false
+    },
+    {
+      "id": "NTF-1777535828952",
+      "type": "product",
+      "title": "Debug Product 132708 is now live",
+      "body": "Seller SEL-406 added Debug Product 132708 and it is live in the marketplace catalog.",
+      "createdAt": "2026-04-30T07:57:08.952Z",
+      "read": false
+    },
+    {
+      "id": "NTF-1777535621637",
+      "type": "product",
+      "title": "Debug Product 132341 is now live",
+      "body": "Seller SEL-405 added Debug Product 132341 and it is live in the marketplace catalog.",
+      "createdAt": "2026-04-30T07:53:41.637Z",
+      "read": false
+    },
+    {
+      "id": "NTF-1777535449559",
+      "type": "product",
+      "title": "Preview Sync Product 132048 is now live",
+      "body": "Seller SEL-405 added Preview Sync Product 132048 and it is live in the marketplace catalog.",
+      "createdAt": "2026-04-30T07:50:49.559Z",
+      "read": false
+    },
+    {
+      "id": "NTF-91",
+      "type": "seller",
+      "title": "1 seller application awaiting approval",
+      "body": "Northline Gear is waiting on KYC review and activation.",
+      "createdAt": "2026-04-27T09:10:00+05:30",
+      "read": false
+    },
+    {
+      "id": "NTF-90",
+      "type": "product",
+      "title": "2 products need moderation review",
+      "body": "Pending approvals include Northline Runner Sneakers and Lehenga Celebration Set.",
+      "createdAt": "2026-04-27T08:35:00+05:30",
+      "read": false
+    },
+    {
+      "id": "NTF-89",
+      "type": "payout",
+      "title": "2 payout requests need action",
+      "body": "Approve or reject seller payout batches before the next settlement cycle.",
+      "createdAt": "2026-04-26T18:25:00+05:30",
+      "read": false
+    },
+    {
+      "id": "NTF-88",
+      "type": "order",
+      "title": "Order issue reported on ORD-88009",
+      "body": "Payment is still pending for a premium saree order and needs monitoring.",
+      "createdAt": "2026-04-26T14:05:00+05:30",
+      "read": true
+    }
+  ],
+  "sellerNotifications": [
+    {
+      "id": "SNTF-SEL-406-1777536163554",
+      "sellerId": "SEL-406",
+      "type": "approval",
+      "title": "Portal Sync Preview 133243 is live",
+      "body": "Your listing is now visible in the customer marketplace.",
+      "createdAt": "2026-04-30T08:02:43.554Z",
+      "read": false
+    },
+    {
+      "id": "SNTF-SEL-406-1777535883051",
+      "sellerId": "SEL-406",
+      "type": "approval",
+      "title": "Preview Sync Product 132802 is live",
+      "body": "Your listing is now visible in the customer marketplace.",
+      "createdAt": "2026-04-30T07:58:03.051Z",
+      "read": false
+    },
+    {
+      "id": "SNTF-SEL-406-1777535828952",
+      "sellerId": "SEL-406",
+      "type": "approval",
+      "title": "Debug Product 132708 is live",
+      "body": "Your listing is now visible in the customer marketplace.",
+      "createdAt": "2026-04-30T07:57:08.952Z",
+      "read": false
+    },
+    {
+      "id": "SNTF-SEL-405-1777535621637",
+      "sellerId": "SEL-405",
+      "type": "approval",
+      "title": "Debug Product 132341 is live",
+      "body": "Your listing is now visible in the customer marketplace.",
+      "createdAt": "2026-04-30T07:53:41.637Z",
+      "read": false
+    },
+    {
+      "id": "SNTF-SEL-405-1777535449559",
+      "sellerId": "SEL-405",
+      "type": "approval",
+      "title": "Preview Sync Product 132048 is live",
+      "body": "Your listing is now visible in the customer marketplace.",
+      "createdAt": "2026-04-30T07:50:49.559Z",
+      "read": false
+    },
+    {
+      "id": "SNTF-401-1",
+      "sellerId": "SEL-401",
+      "type": "order",
+      "title": "2 new orders need packing",
+      "body": "Fresh orders are in queue from Pune and Noida.",
+      "createdAt": "2026-04-27T09:20:00+05:30",
+      "read": false
+    },
+    {
+      "id": "SNTF-401-2",
+      "sellerId": "SEL-401",
+      "type": "inventory",
+      "title": "Urban Weave Relaxed Hoodie is low on stock",
+      "body": "Only 14 units remain before your next replenishment cycle.",
+      "createdAt": "2026-04-27T08:45:00+05:30",
+      "read": false
+    },
+    {
+      "id": "SNTF-404-1",
+      "sellerId": "SEL-404",
+      "type": "approval",
+      "title": "Lehenga Celebration Set is awaiting marketplace approval",
+      "body": "Your festive lehenga submission has entered the admin moderation queue.",
+      "createdAt": "2026-04-27T08:20:00+05:30",
+      "read": false
+    },
+    {
+      "id": "SNTF-404-2",
+      "sellerId": "SEL-404",
+      "type": "payout",
+      "title": "Payout request PAY-5400 is pending admin approval",
+      "body": "The platform finance team will review your payout in the next cycle.",
+      "createdAt": "2026-04-26T18:25:00+05:30",
+      "read": true
+    }
+  ]
+}

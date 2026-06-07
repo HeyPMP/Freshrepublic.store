@@ -1,2 +1,40 @@
-# Auto detect text files and perform LF normalization
+# Auto detect text files and normalize line endings to LF
 * text=auto
+
+# Shell scripts
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Batch and PowerShell scripts
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# HTML, CSS, JavaScript
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+
+# Documentation
+*.md text eol=lf
+README* text eol=lf
+CHANGELOG* text eol=lf
+LICENSE text eol=lf
+
+# YAML and configuration files
+*.yml text eol=lf
+*.yaml text eol=lf
+.env* text eol=lf
+
+# Binary files
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.ico binary
+*.mov binary
+*.mp4 binary
+*.mp3 binary
+*.gz binary
+*.zip binary
